@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Kateryna Timoschenko](https://up.htmlacademy.ru/react-individual/3/user/2520051).
-* Наставник: `Неизвестно`.
+* Наставник: `Антон Ткачук`.
 
 ---
 
