@@ -1,4 +1,17 @@
+type PlaceCardItem = {
+    id: string;
+    title: string;
+    type: string;
+    price: number;
+    previewImage: string;
+    isFavorite: boolean;
+    isPremium: boolean;
+    rating: number;
+}
 
+type PlaceCardProps = {
+  dataObj: PlaceCardItem;
+}
 function PremiumClass() {
   return (
     <div className="place-card__mark">
@@ -7,7 +20,7 @@ function PremiumClass() {
   );
 }
 
-export default function PlaceCard(dataObj): JSX.Element {
+export default function PlaceCard({dataObj}: PlaceCardProps): JSX.Element {
   return (
     <article className="cities__card place-card">
       {dataObj.isPremium && <PremiumClass/>}
@@ -31,7 +44,7 @@ export default function PlaceCard(dataObj): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: dataObj.rating * 10 }}></span>
+            <span style={{ width: `${dataObj.rating * 20}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
