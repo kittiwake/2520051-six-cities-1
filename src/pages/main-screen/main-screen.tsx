@@ -4,8 +4,15 @@ import PlaceCard from '../../components/card/card';
 import { PlacesOption, cities } from '../../constant';
 import { mock } from '../../mocks';
 
+type LocationItemProps = {
+  city: string;
+}
 
-function LocationItem({city}): JSX.Element {
+type PlaceOptionProps = {
+  option: string;
+}
+
+function LocationItem({city}: LocationItemProps): JSX.Element {
   return (
     <li className="locations__item">
       <a className="locations__item-link tabs__item" href="#">
@@ -15,7 +22,7 @@ function LocationItem({city}): JSX.Element {
   );
 }
 
-function PlaceOptionItem ({option}): JSX.Element {
+function PlaceOptionItem ({option}: PlaceOptionProps): JSX.Element {
   return (<li className="places__option" tabIndex="0">{option}</li>);
 }
 
