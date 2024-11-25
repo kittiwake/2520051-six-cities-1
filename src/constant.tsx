@@ -5,15 +5,6 @@ export const PlacesOption = {
   RAITNG: 'Top rated first'
 };
 
-export const cities = [
-  'Paris',
-  'Cologne',
-  'Brussels',
-  'Amsterdam',
-  'Hamburg',
-  'Dusseldorf'
-];
-
 export const DateFormat = {
   DATE_DB: 'YYYY-MM-DD',
   MONTH_YEAR: 'MMMM YYYY',

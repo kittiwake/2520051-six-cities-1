@@ -7,7 +7,7 @@ import { mock, mockItem, mockComments } from '../../mocks';
 
 const nearestMocks = mock.slice(7, 10);
 
-function GaleryItem({ img }): JSX.Element {
+function GaleryItem({img}: {img: string}): JSX.Element {
   return (
     <div className="offer__image-wrapper" >
       <img className="offer__image" src={img} alt="Photo studio" />

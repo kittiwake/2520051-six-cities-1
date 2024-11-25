@@ -1,8 +1,17 @@
 import Header from '../../components/header/header';
 import PlaceCard from '../../components/card/card';
 
-import { PlacesOption, cities } from '../../constant';
+import { PlacesOption } from '../../constant';
 import { mock } from '../../mocks';
+
+const cities = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf'
+];
 
 type LocationItemProps = {
   city: string;
