@@ -1,6 +1,7 @@
 import { mock } from '../../mocks';
 import PlaceCard from '../../components/card/card';
 import Header from '../../components/header/header';
+import Footer from '../../components/footer/footer';
 
 
 const pageMocks = [
@@ -30,7 +31,7 @@ type CityItemProps = {
   mocks: PlaceCardItem[];
 }
 
-function CityItem({city, mocks}: CityItemProps) {
+function CityItem({ city, mocks }: CityItemProps) {
   return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
@@ -41,7 +42,7 @@ function CityItem({city, mocks}: CityItemProps) {
         </div>
       </div>
       <div className="favorites__places">
-        {mocks.map((cardMocks: PlaceCardItem) => <PlaceCard dataObj={cardMocks} key={cardMocks.id}/>)}
+        {mocks.map((cardMocks: PlaceCardItem) => <PlaceCard dataObj={cardMocks} key={cardMocks.id} />)}
       </div>
     </li>
   );
@@ -49,18 +50,21 @@ function CityItem({city, mocks}: CityItemProps) {
 
 function FavoritesScreen(): JSX.Element {
   return (
-    <main className="page__main page__main--favorites">
+    <div className="page">
       <Header />
-      <div className="page__favorites-container container">
-        <section className="favorites">
-          <h1 className="favorites__title">Saved listing</h1>
-          <ul className="favorites__list">
-            {pageMocks.map((mockCityItem) => <CityItem city={mockCityItem.city} mocks={mockCityItem.mocks} key={mockCityItem.city}/>)}
+      <main className="page__main page__main--favorites">
+        <div className="page__favorites-container container">
+          <section className="favorites">
+            <h1 className="favorites__title">Saved listing</h1>
+            <ul className="favorites__list">
+              {pageMocks.map((mockCityItem) => <CityItem city={mockCityItem.city} mocks={mockCityItem.mocks} key={mockCityItem.city} />)}
 
-          </ul>
-        </section>
-      </div>
-    </main>
+            </ul>
+          </section>
+        </div>
+      </main>
+      <Footer/>
+    </div>
   );
 }
 
