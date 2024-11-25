@@ -13,3 +13,9 @@ export const cities = [
   'Hamburg',
   'Dusseldorf'
 ];
+
+export const DateFormat = {
+  DATE_DB: 'YYYY-MM-DD',
+  MONTH_YEAR: 'MMMM YYYY',
+  DAY: 'D'
+};

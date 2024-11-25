@@ -1,3 +1,5 @@
+import { PremiumClass, RatingWidget } from '../widgets/widgets';
+
 type PlaceCardItem = {
     id: string;
     title: string;
@@ -12,18 +14,11 @@ type PlaceCardItem = {
 type PlaceCardProps = {
   dataObj: PlaceCardItem;
 }
-function PremiumClass() {
-  return (
-    <div className="place-card__mark">
-      <span>Premium</span>
-    </div>
-  );
-}
 
 export default function PlaceCard({dataObj}: PlaceCardProps): JSX.Element {
   return (
     <article className="cities__card place-card">
-      {dataObj.isPremium && <PremiumClass/>}
+      {dataObj.isPremium && <PremiumClass type='place-card'/>}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
           <img className="place-card__image" src={dataObj.previewImage} width="260" height="200" alt="Place image" />
@@ -42,12 +37,9 @@ export default function PlaceCard({dataObj}: PlaceCardProps): JSX.Element {
             <span className="visually-hidden">To bookmarks</span>
           </button>
         </div>
-        <div className="place-card__rating rating">
-          <div className="place-card__stars rating__stars">
-            <span style={{ width: `${dataObj.rating * 20}%` }}></span>
-            <span className="visually-hidden">Rating</span>
-          </div>
-        </div>
+
+        <RatingWidget type='place-card' rating={dataObj.rating}/>
+
         <h2 className="place-card__name">
           <a href="#">{dataObj.title}</a>
         </h2>
