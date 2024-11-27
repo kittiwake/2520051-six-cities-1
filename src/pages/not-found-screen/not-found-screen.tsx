@@ -14,7 +14,7 @@ function NotFoundScreen(): JSX.Element {
             {/* чета ннада заменить в стилях, изображение */}
             <div className="favorites__status-wrapper">
               <b className="favorites__status">404 Not found</b>
-              <p className="favorites__status-description">Head back to the 
+              <p className="favorites__status-description">Head back to the
                 <Link to={AppRoute.Main}> homepage</Link>
               </p>
             </div>
