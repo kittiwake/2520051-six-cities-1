@@ -1,5 +1,7 @@
 import Footer from '../../components/widgets/footer/footer';
 import Header from '../../components/widgets/header/header';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../constant';
 
 function NotFoundScreen(): JSX.Element {
   return (
@@ -12,7 +14,9 @@ function NotFoundScreen(): JSX.Element {
             {/* чета ннада заменить в стилях, изображение */}
             <div className="favorites__status-wrapper">
               <b className="favorites__status">404 Not found</b>
-              <p className="favorites__status-description">Head back to the homepage.</p>
+              <p className="favorites__status-description">Head back to the 
+                <Link to={AppRoute.Main}> homepage</Link>
+              </p>
             </div>
           </section>
         </div>

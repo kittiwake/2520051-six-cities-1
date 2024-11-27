@@ -5,19 +5,17 @@ import {
   Route,
   // Link
 } from 'react-router-dom';
-import { AppRoute } from '../constant';
+import { AppRoute, AuthorizationStatus } from '../constant';
 
 import MainScreen from '../pages/main-screen/main-screen';
-
-// эти импорты только до роутинга
 import FavoritesScreen from '../pages/favorites-screen/favorites-screen';
 import OfferScreen from '../pages/offer-screen/offer-screen';
 import LoginScreen from '../pages/login-screen/login-screen';
 import NotFoundScreen from '../pages/not-found-screen/not-found-screen';
-
+import PrivateRoute from '../components/private-route/private-route';
 
 function App(): JSX.Element {
-  return(
+  return (
     <BrowserRouter>
       <Routes>
         <Route
@@ -26,7 +24,13 @@ function App(): JSX.Element {
         />
         <Route
           path={AppRoute.Favorites}
-          element={<FavoritesScreen />}
+          element={
+            <PrivateRoute
+              authorizationStatus={AuthorizationStatus.NoAuth}
+            >
+              <FavoritesScreen />
+            </PrivateRoute>
+          }
         />
         <Route
           path={AppRoute.Offer}
