@@ -19,3 +19,10 @@ export const DateFormat = {
   MONTH_YEAR: 'MMMM YYYY',
   DAY: 'D'
 };
+
+export enum AppRoute {
+  Login = '/login',
+  Main = '/',
+  Favorites = '/favorites',
+  Offer = '/offer'
+}
