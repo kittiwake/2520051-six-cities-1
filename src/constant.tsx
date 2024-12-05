@@ -1,10 +1,3 @@
-export const PlacesOption = {
-  POPULAR: 'Popular',
-  PRICE_UP: 'Price: low to high',
-  PRICE_DOWN: 'Price: high to low',
-  RAITNG: 'Top rated first'
-};
-
 export const cities = [
   'Paris',
   'Cologne',
@@ -13,12 +6,6 @@ export const cities = [
   'Hamburg',
   'Dusseldorf'
 ];
-
-export const DateFormat = {
-  DATE_DB: 'YYYY-MM-DD',
-  MONTH_YEAR: 'MMMM YYYY',
-  DAY: 'D'
-};
 
 export enum AppRoute {
   Login = '/login',
@@ -32,3 +19,26 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export const reviewRatings = [
+  {
+    rating: 5,
+    title: 'perfect'
+  },
+  {
+    rating: 4,
+    title: 'good'
+  },
+  {
+    rating: 3,
+    title: 'not bad'
+  },
+  {
+    rating: 2,
+    title: 'badly'
+  },
+  {
+    rating: 1,
+    title: 'terribly'
+  },
+];

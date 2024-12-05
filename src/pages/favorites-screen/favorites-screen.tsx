@@ -42,7 +42,7 @@ function CityItem({ city, mocks }: CityItemProps) {
         </div>
       </div>
       <div className="favorites__places">
-        {mocks.map((cardMocks: PlaceCardItem) => <PlaceCard dataObj={cardMocks} key={cardMocks.id} />)}
+        {mocks.map((cardMocks: PlaceCardItem) => <PlaceCard cardData={cardMocks} key={cardMocks.id} />)}
       </div>
     </li>
   );

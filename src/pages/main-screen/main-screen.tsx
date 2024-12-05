@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import Header from '../../components/widgets/header/header';
 import PlaceCard from '../../components/card/card';
 
-import { PlacesOption, cities } from '../../constant';
+import { cities } from '../../constant';
+import { PlacesOption } from '../../transfers';
 import { mock } from '../../mocks';
 
 type LocationItemProps = {
@@ -27,6 +29,7 @@ function PlaceOptionItem({option}: PlaceOptionProps): JSX.Element {
 }
 
 function MainScreen(): JSX.Element {
+  const [cardState, setCardState] = useState('');
   return (
     <div className="page page--gray page--main">
       <Header />
@@ -57,7 +60,18 @@ function MainScreen(): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {mock.map((dataObj) => <PlaceCard dataObj={dataObj} key={dataObj.id} />)}
+                {mock.map((cardData) => (
+                  <PlaceCard
+                    cardData={cardData}
+                    key={cardData.id}
+                    onHover={()=>{
+                      setCardState(cardData.id);
+                    }}
+                    onBlur={()=>{
+                      setCardState('');
+                    }}
+                  />)
+                )}
               </div>
             </section>
             <div className="cities__right-section">
