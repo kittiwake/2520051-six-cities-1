@@ -1,6 +1,6 @@
 import { RatingWidget } from './widgets';
 import { getDatetimeFormat } from '../../utils';
-import {DateFormat} from '../../constant';
+import {DateFormat} from '../../transfers';
 
 type ReviewItemProps = {
   id: string;
@@ -16,7 +16,7 @@ type ReviewItemProps = {
 
 function ReviewItem(props: ReviewItemProps) {
   return (
-    <li className="reviews__item">
+    <li className="reviews__item" id={props.id}>
       <div className="reviews__user user">
         <div className="reviews__avatar-wrapper user__avatar-wrapper">
           <img className="reviews__avatar user__avatar" src={props.user.avatarUrl} width="54" height="54" alt="Reviews avatar" />

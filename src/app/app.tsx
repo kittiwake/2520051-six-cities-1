@@ -14,6 +14,8 @@ import LoginScreen from '../pages/login-screen/login-screen';
 import NotFoundScreen from '../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../components/private-route/private-route';
 
+const authorizationStatus = AuthorizationStatus.Auth;
+
 function App(): JSX.Element {
   return (
     <BrowserRouter>
@@ -26,7 +28,7 @@ function App(): JSX.Element {
           path={AppRoute.Favorites}
           element={
             <PrivateRoute
-              authorizationStatus={AuthorizationStatus.NoAuth}
+              authorizationStatus={authorizationStatus}
             >
               <FavoritesScreen />
             </PrivateRoute>
@@ -34,7 +36,7 @@ function App(): JSX.Element {
         />
         <Route
           path={AppRoute.Offer}
-          element={<OfferScreen />}
+          element={<OfferScreen authorizationStatus={authorizationStatus}/>}
         />
         <Route
           path={AppRoute.Login}
