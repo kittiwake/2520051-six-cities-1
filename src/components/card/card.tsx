@@ -15,16 +15,15 @@ type PlaceCardItem = {
 
 type PlaceCardProps = {
   cardData: PlaceCardItem;
-  onHover: (cardData?: PlaceCardItem) => void;
-  onBlur: (cardData?: PlaceCardItem) => void;
+  onMouseMove: (cardId: string | null) => void;
 }
 
-export default function PlaceCard({cardData, onHover, onBlur}: PlaceCardProps): JSX.Element {
+export default function PlaceCard({cardData, onMouseMove}: PlaceCardProps): JSX.Element {
   return (
     <article
       className="cities__card place-card"
-      onMouseEnter={() => onHover()}
-      onMouseLeave={() => onBlur()}
+      onMouseEnter={() => onMouseMove(cardData.id)}
+      onMouseLeave={() => onMouseMove(null)}
     >
       {cardData.isPremium && <PremiumClass type='place-card'/>}
       <div className="cities__image-wrapper place-card__image-wrapper">

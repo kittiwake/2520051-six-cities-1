@@ -1,35 +1,19 @@
 import { useState } from 'react';
 import Header from '../../components/widgets/header/header';
 import PlaceCard from '../../components/card/card';
+import Map from '../../components/map/map';
 
 import { cities } from '../../constant';
 import { PlacesOption } from '../../transfers';
 import { mock } from '../../mocks';
 
-type LocationItemProps = {
-  city: string;
-}
-
-type PlaceOptionProps = {
-  option: string;
-}
-
-function LocationItem({city}: LocationItemProps): JSX.Element {
-  return (
-    <li className="locations__item">
-      <a className="locations__item-link tabs__item" href="#">
-        <span>{city}</span>
-      </a>
-    </li>
-  );
-}
-
-function PlaceOptionItem({option}: PlaceOptionProps): JSX.Element {
-  return (<li className="places__option" tabIndex={0}>{option}</li>);
-}
-
 function MainScreen(): JSX.Element {
-  const [cardState, setCardState] = useState('');
+  const [activeCardId, setActiveCardId] = useState<string | null>(null);
+  function handleCardHover(cardId: string | null): void {
+    setActiveCardId(cardId);
+  }
+  const cityLocation = mock[0].city.location;
+  const mapData = mock.map((offer) => ({'id': offer.id, 'location': offer.location}));
   return (
     <div className="page page--gray page--main">
       <Header />
@@ -38,7 +22,13 @@ function MainScreen(): JSX.Element {
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              {cities.map((city) => <LocationItem key={city} city={city} />)}
+              {cities.map((city) => (
+                <li className="locations__item" key={city}>
+                  <a className="locations__item-link tabs__item" href="#">
+                    <span>{city}</span>
+                  </a>
+                </li>
+              ))}
             </ul>
           </section>
         </div>
@@ -56,7 +46,7 @@ function MainScreen(): JSX.Element {
                   </svg>
                 </span>
                 <ul className="places__options places__options--custom places__options--opened">
-                  {Object.entries(PlacesOption).map(([key, option]) => <PlaceOptionItem option={option} key={key} />)}
+                  {Object.entries(PlacesOption).map(([key, option]) => <li className="places__option" tabIndex={0} key={key}>{option}</li>)}
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
@@ -64,18 +54,13 @@ function MainScreen(): JSX.Element {
                   <PlaceCard
                     cardData={cardData}
                     key={cardData.id}
-                    onHover={()=>{
-                      setCardState(cardData.id);
-                    }}
-                    onBlur={()=>{
-                      setCardState('');
-                    }}
+                    onMouseMove={handleCardHover}
                   />)
                 )}
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map mapData={mapData} activeCardId={activeCardId} cityLocation={cityLocation}/>
             </div>
           </div>
         </div>
