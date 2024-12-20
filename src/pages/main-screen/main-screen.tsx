@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Header from '../../components/widgets/header/header';
 import PlaceCard from '../../components/card/card';
 import Map from '../../components/map/map';
+import { Helmet } from 'react-helmet-async';
 
 import { cities } from '../../constant';
 import { PlacesOption } from '../../transfers';
@@ -16,6 +17,9 @@ function MainScreen(): JSX.Element {
   const mapData = mock.map((offer) => ({'id': offer.id, 'location': offer.location}));
   return (
     <div className="page page--gray page--main">
+      <Helmet>
+        <title>{mock[0].city.name}</title>
+      </Helmet>
       <Header />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>

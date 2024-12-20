@@ -2,6 +2,7 @@ import { mock } from '../../mocks';
 import PlaceCard from '../../components/card/card';
 import Header from '../../components/widgets/header/header';
 import Footer from '../../components/widgets/footer/footer';
+import { Helmet } from'react-helmet-async';
 
 
 const pageMocks = [
@@ -29,6 +30,9 @@ type PlaceCardItem = {
 function FavoritesScreen(): JSX.Element {
   return (
     <div className="page">
+      <Helmet>
+        <title>Favorites</title>
+      </Helmet>
       <Header />
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">

@@ -7,12 +7,16 @@ import ReviewsForm from '../../components/reviews-form/reviews-form';
 
 import { mock, mockItem, mockComments } from '../../mocks';
 import { AuthorizationStatus } from '../../constant';
+import { Helmet } from 'react-helmet-async';
 
 const nearestMocks = mock.slice(7, 10);
 
 function OfferScreen({authorizationStatus}: {authorizationStatus: AuthorizationStatus}): JSX.Element {
   return (
     <div className="page">
+      <Helmet>
+        <title>{mockItem.title}</title>
+      </Helmet>
       <Header />
       <main className="page__main page__main--offer">
         <section className="offer">
