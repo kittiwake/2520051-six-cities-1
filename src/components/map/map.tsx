@@ -1,5 +1,5 @@
-import { useRef, useEffect, useState } from 'react';
-import { Icon, LatLngTuple, Marker, layerGroup } from 'leaflet';
+import { useRef, useEffect } from 'react';
+import { Icon, layerGroup } from 'leaflet';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../constant';
 import useMap from '../hooks/use-map';
 import L from 'leaflet';
@@ -50,7 +50,7 @@ function Map({mapData, cityLocation, activeCardId}: MapProps): JSX.Element {
       L.marker([latitude, longitude], {icon: item.id === activeCardId ? currentCustomIcon : defaultCustomIcon})
         .addTo(markerLayer);
     });
-    // Очистка при размонтировании компонента
+
     return () => {
       map.removeLayer(markerLayer);
     };
