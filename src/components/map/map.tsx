@@ -42,9 +42,9 @@ type MapProps = {
   type: 'offer' | 'cities';
 }
 
-function Map({mapData, centerMap: cityLocation, activeCardId, type}: MapProps): JSX.Element {
+function Map({mapData, centerMap, activeCardId, type}: MapProps): JSX.Element {
   const mapRef = useRef<HTMLElement | null>(null);
-  const map = useMap(mapRef, cityLocation);
+  const map = useMap(mapRef, centerMap);
 
 
   useEffect(() => {
@@ -60,13 +60,13 @@ function Map({mapData, centerMap: cityLocation, activeCardId, type}: MapProps): 
         .addTo(markerLayer);
     });
     if (type === 'offer') {
-      L.circle([cityLocation.latitude, cityLocation.longitude], currentCustomCircle).addTo(markerLayer);
+      L.circle([centerMap.latitude, centerMap.longitude], currentCustomCircle).addTo(markerLayer);
     }
 
     return () => {
       map.removeLayer(markerLayer);
     };
-  }, [mapData, activeCardId, map, type, cityLocation]);
+  }, [mapData, activeCardId, map, type, centerMap]);
 
   return (
     <section className={`${type}__map map`} ref={mapRef}></section>
