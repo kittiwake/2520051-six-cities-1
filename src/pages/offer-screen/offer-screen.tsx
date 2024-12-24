@@ -4,14 +4,23 @@ import RatingWidget from '../../components/widgets/rating-widget';
 import PremiumClass from '../../components/widgets/premium-class';
 import ReviewsListWidget from '../../components/widgets/review';
 import ReviewsForm from '../../components/reviews-form/reviews-form';
+import Map from '../../components/map/map';
 
 import { mock, mockItem, mockComments } from '../../mocks';
 import { AuthorizationStatus } from '../../constant';
 import { Helmet } from 'react-helmet-async';
+import { useState } from 'react';
 
 const nearestMocks = mock.slice(7, 10);
 
 function OfferScreen({authorizationStatus}: {authorizationStatus: AuthorizationStatus}): JSX.Element {
+  const [activeCardId, setActiveCardId] = useState<string | null>(null);
+  function handleCardHover(cardId: string | null): void {
+    setActiveCardId(cardId);
+  }
+  const centerMap = {...mockItem.location, zoom: mock[0].city.location.zoom};
+  const mapData = nearestMocks.map((offer) => ({'id': offer.id, 'location': offer.location}));
+
   return (
     <div className="page">
       <Helmet>
@@ -99,13 +108,13 @@ function OfferScreen({authorizationStatus}: {authorizationStatus: AuthorizationS
               </section>
             </div>
           </div>
-          <section className="offer__map map"></section>
+          <Map mapData={mapData} activeCardId={activeCardId} centerMap={centerMap} type='offer'/>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {nearestMocks.map((cardData) => <PlaceCard cardData={cardData} key={cardData.id} />)}
+              {nearestMocks.map((cardData) => <PlaceCard cardData={cardData} key={cardData.id} onMouseMove={handleCardHover}/>)}
             </div>
           </section>
         </div>

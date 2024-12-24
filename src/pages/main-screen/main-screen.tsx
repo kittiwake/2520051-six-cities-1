@@ -64,7 +64,7 @@ function MainScreen(): JSX.Element {
               </div>
             </section>
             <div className="cities__right-section">
-              <Map mapData={mapData} activeCardId={activeCardId} cityLocation={cityLocation}/>
+              <Map mapData={mapData} activeCardId={activeCardId} centerMap={cityLocation} type='cities'/>
             </div>
           </div>
         </div>
