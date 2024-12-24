@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { Icon, layerGroup } from 'leaflet';
+import { Icon, layerGroup, CircleMarkerOptions } from 'leaflet';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../constant';
 import useMap from '../hooks/use-map';
 import L from 'leaflet';
@@ -18,6 +18,13 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
+const currentCustomCircle: CircleMarkerOptions = {
+  color: 'rgba(39, 104, 168, 0.1)',
+  fillColor: 'rgba(39, 104, 168, 0.5)',
+  fillOpacity: 0.6,
+  radius: 1000
+};
+
 type LocationItemType = {
   latitude: number;
   longitude: number;
@@ -30,13 +37,15 @@ type MapDataType = {
 
 type MapProps = {
   mapData: MapDataType[];
-  cityLocation: LocationItemType;
+  centerMap: LocationItemType;
   activeCardId: string | null;
+  type: 'offer' | 'cities';
 }
 
-function Map({mapData, cityLocation, activeCardId}: MapProps): JSX.Element {
+function Map({mapData, centerMap: cityLocation, activeCardId, type}: MapProps): JSX.Element {
   const mapRef = useRef<HTMLElement | null>(null);
   const map = useMap(mapRef, cityLocation);
+
 
   useEffect(() => {
     if (!map){
@@ -50,14 +59,17 @@ function Map({mapData, cityLocation, activeCardId}: MapProps): JSX.Element {
       L.marker([latitude, longitude], {icon: item.id === activeCardId ? currentCustomIcon : defaultCustomIcon})
         .addTo(markerLayer);
     });
+    if (type === 'offer') {
+      L.circle([cityLocation.latitude, cityLocation.longitude], currentCustomCircle).addTo(markerLayer);
+    }
 
     return () => {
       map.removeLayer(markerLayer);
     };
-  }, [mapData, activeCardId, map]);
+  }, [mapData, activeCardId, map, type, cityLocation]);
 
   return (
-    <section className="cities__map map" ref={mapRef}></section>
+    <section className={`${type}__map map`} ref={mapRef}></section>
   );
 }
 
