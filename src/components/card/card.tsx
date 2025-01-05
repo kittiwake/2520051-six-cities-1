@@ -28,7 +28,7 @@ function PlaceCard({cardData, onMouseMove}: PlaceCardProps): JSX.Element {
     >
       {cardData.isPremium && <PremiumClass type='place-card'/>}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={AppRoute.Offer}>
+        <Link to={AppRoute.Offer.replace(':id', cardData.id)}>
           <img className="place-card__image" src={cardData.previewImage} width="260" height="200" alt="Place image" />
         </Link>
       </div>

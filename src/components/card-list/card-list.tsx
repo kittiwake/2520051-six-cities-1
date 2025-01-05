@@ -36,7 +36,7 @@ function CardList({currentCity, currentOffers, isEmpty}: CardListProps): JSX.Ele
     <div className="cities__places-container container">
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
-        <b className="places__found">312 places to stay in {currentCity.name}</b>
+        <b className="places__found">{currentOffers.length} places to stay in {currentCity.name}</b>
         <form className="places__sorting" action="#" method="get">
           <span className="places__sorting-caption">Sort by</span>
           <span className="places__sorting-type" tabIndex={0}>
@@ -60,7 +60,7 @@ function CardList({currentCity, currentOffers, isEmpty}: CardListProps): JSX.Ele
         </div>
       </section>
       <div className="cities__right-section">
-        <Map mapData={mapData} activeCardId={activeCardId} centerMap={currentCity.location} type='cities'/>
+        <Map key={currentCity.name} mapData={mapData} activeCardId={activeCardId} centerMap={currentCity.location} type='cities'/>
       </div>
     </div>
   );
