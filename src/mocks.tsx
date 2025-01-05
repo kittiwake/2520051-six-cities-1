@@ -251,7 +251,53 @@ export const mock = [
     'isFavorite': false,
     'isPremium': true,
     'rating': 4.3
-  }
+  },
+  {
+    'id': '07239e88-8e3a-4ae4-9bfc-c6887271ee92',
+    'title': 'Penthouse, 4-5 rooms + 5 balconies',
+    'type': 'apartment',
+    'price': 201,
+    'previewImage': 'https://15.design.htmlacademy.pro/static/hotel/13.jpg',
+    'city': {
+      'name': 'Dusseldorf',
+      'location': {
+        'latitude': 51.225402,
+        'longitude': 6.776314,
+        'zoom': 13
+      }
+    },
+    'location': {
+      'latitude': 51.204402,
+      'longitude': 6.7773140000000005,
+      'zoom': 16
+    },
+    'isFavorite': false,
+    'isPremium': true,
+    'rating': 3.9
+  },
+  {
+    'id': '35cf9871-a831-4072-aea0-3eb03c209e4c',
+    'title': 'Beautiful & luxurious apartment at great location',
+    'type': 'apartment',
+    'price': 333,
+    'previewImage': 'https://15.design.htmlacademy.pro/static/hotel/12.jpg',
+    'city': {
+      'name': 'Dusseldorf',
+      'location': {
+        'latitude': 51.225402,
+        'longitude': 6.776314,
+        'zoom': 13
+      }
+    },
+    'location': {
+      'latitude': 51.217402,
+      'longitude': 6.7693140000000005,
+      'zoom': 16
+    },
+    'isFavorite': false,
+    'isPremium': false,
+    'rating': 3
+  },
 ];
 
 export const mockItem = {
