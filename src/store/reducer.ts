@@ -1,17 +1,22 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity } from './action';
+import { setCity, setSorting } from './action';
 import { cities } from '../constant';
 import { mock } from '../mocks';
+import { PlacesOption } from '../transfers';
 
 
 const initialState = {
   city: cities[0],
-  offers: mock
+  offers: mock,
+  sorting: PlacesOption.POPULAR,
 };
 
 const reducer = createReducer(initialState, (builder) => {
-  builder.addCase(changeCity, (state, action) => {
+  builder.addCase(setCity, (state, action) => {
     state.city = action.payload;
+  });
+  builder.addCase(setSorting, (state, action) => {
+    state.sorting = action.payload;
   });
 
 });

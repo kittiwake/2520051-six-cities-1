@@ -8,7 +8,8 @@ import { Link } from 'react-router-dom';
 import { cities } from '../../constant';
 
 import { useAppDispatch, useAppSelector } from '../../components/hooks';
-import { changeCity } from '../../store/action';
+import { setCity } from '../../store/action';
+import EmptyCardList from '../../components/card-list/empty-card-list';
 
 function MainScreen(): JSX.Element {
   const currentCity = useAppSelector((state) => state.city);
@@ -35,7 +36,7 @@ function MainScreen(): JSX.Element {
                     to="#"
                     onClick={(evt) => {
                       evt.preventDefault();
-                      dispatch(changeCity(city));
+                      dispatch(setCity(city));
                     }}
                   >
                     <span>{city.name}</span>
@@ -46,11 +47,12 @@ function MainScreen(): JSX.Element {
           </section>
         </div>
         <div className="cities">
-          <CardList
-            currentCity={currentCity}
-            currentOffers={currentOffers}
-            isEmpty={isEmpty}
-          />
+          {isEmpty && <EmptyCardList></EmptyCardList>}
+          {!isEmpty &&
+            <CardList
+              currentCity={currentCity}
+              cityOffers={currentOffers}
+            />}
         </div>
       </main>
     </div>

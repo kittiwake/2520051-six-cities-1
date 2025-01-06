@@ -3,6 +3,8 @@ import { City } from '../types/main';
 
 // const incremenStep = createAction<number>('game/incrementStep');
 
-const changeCity = createAction<City>('main/changeCity');
+const setCity = createAction<City>('main/setCity');
 
-export {changeCity};
+const setSorting = createAction<string>('main/setSorting');
+
+export {setCity, setSorting};
