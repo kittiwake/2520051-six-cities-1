@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { Icon, layerGroup, CircleMarkerOptions } from 'leaflet';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../constant';
+import { Location } from '../../types/main';
 import useMap from '../hooks/use-map';
 import L from 'leaflet';
 
@@ -22,28 +23,25 @@ const currentCustomCircle: CircleMarkerOptions = {
   color: 'rgba(39, 104, 168, 0.1)',
   fillColor: 'rgba(39, 104, 168, 0.5)',
   fillOpacity: 0.6,
-  radius: 1000
+  radius: 500
 };
 
-type LocationItemType = {
-  latitude: number;
-  longitude: number;
-  zoom: number;
-}
+
 type MapDataType = {
   id: string;
-  location: LocationItemType;
+  location: Location;
 }
 
 type MapProps = {
   mapData: MapDataType[];
-  centerMap: LocationItemType;
+  centerMap: Location;
   activeCardId: string | null;
   type: 'offer' | 'cities';
 }
 
 function Map({mapData, centerMap, activeCardId, type}: MapProps): JSX.Element {
   const mapRef = useRef<HTMLElement | null>(null);
+
   const map = useMap(mapRef, centerMap);
 
 

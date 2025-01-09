@@ -10,15 +10,26 @@ import { mock, mockItem, mockComments } from '../../mocks';
 import { AuthorizationStatus } from '../../constant';
 import { Helmet } from 'react-helmet-async';
 import { useState } from 'react';
+import { useAppSelector } from '../../components/hooks';
+import { useParams } from 'react-router-dom';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 const nearestMocks = mock.slice(7, 10);
 
 function OfferScreen({authorizationStatus}: {authorizationStatus: AuthorizationStatus}): JSX.Element {
+  const { id } = useParams<{ id: string }>();
+  const offers = useAppSelector((state) => state.offers);
+  const currentOffer = offers.find((offer) => offer.id === id);
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
   function handleCardHover(cardId: string | null): void {
     setActiveCardId(cardId);
   }
-  const centerMap = {...mockItem.location, zoom: mock[0].city.location.zoom};
+  if(!currentOffer){
+    return (
+      <NotFoundScreen></NotFoundScreen>
+    );
+  }
+  const centerMap = currentOffer.location;
   const mapData = nearestMocks.map((offer) => ({'id': offer.id, 'location': offer.location}));
 
   return (
