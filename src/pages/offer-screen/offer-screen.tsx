@@ -1,5 +1,4 @@
 import Header from '../../components/widgets/header/header';
-import PlaceCard from '../../components/card/card';
 import RatingWidget from '../../components/widgets/rating-widget';
 import PremiumClass from '../../components/widgets/premium-class';
 import ReviewsListWidget from '../../components/widgets/review';
@@ -9,10 +8,10 @@ import Map from '../../components/map/map';
 import { mock, mockItem, mockComments } from '../../mocks';
 import { AuthorizationStatus } from '../../constant';
 import { Helmet } from 'react-helmet-async';
-import { useState } from 'react';
 import { useAppSelector } from '../../components/hooks';
 import { useParams } from 'react-router-dom';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
+import CardList from '../../components/card-list/card-list';
 
 const nearestMocks = mock.slice(7, 10);
 
@@ -20,10 +19,6 @@ function OfferScreen({authorizationStatus}: {authorizationStatus: AuthorizationS
   const { id } = useParams<{ id: string }>();
   const offers = useAppSelector((state) => state.offers);
   const currentOffer = offers.find((offer) => offer.id === id);
-  const [activeCardId, setActiveCardId] = useState<string | null>(null);
-  function handleCardHover(cardId: string | null): void {
-    setActiveCardId(cardId);
-  }
   if(!currentOffer){
     return (
       <NotFoundScreen></NotFoundScreen>
@@ -119,14 +114,12 @@ function OfferScreen({authorizationStatus}: {authorizationStatus: AuthorizationS
               </section>
             </div>
           </div>
-          <Map mapData={mapData} activeCardId={activeCardId} centerMap={centerMap} type='offer'/>
+          <Map mapData={mapData} centerMap={centerMap} type='offer'/>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="near-places__list places__list">
-              {nearestMocks.map((cardData) => <PlaceCard cardData={cardData} key={cardData.id} onMouseMove={handleCardHover}/>)}
-            </div>
+            <CardList offers={nearestMocks} typeContent='offer'></CardList>
           </section>
         </div>
       </main>

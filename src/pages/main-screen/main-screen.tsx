@@ -1,6 +1,6 @@
 
 import Header from '../../components/widgets/header/header';
-import CardList from '../../components/card-list/card-list';
+import MainContent from '../../components/main-content/main-content';
 
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
@@ -8,7 +8,8 @@ import { Link } from 'react-router-dom';
 import { cities } from '../../constant';
 
 import { useAppDispatch, useAppSelector } from '../../components/hooks';
-import { changeCity } from '../../store/action';
+import { setCity } from '../../store/action';
+import EmptyCardList from '../../components/card-list/empty-card-list';
 
 function MainScreen(): JSX.Element {
   const currentCity = useAppSelector((state) => state.city);
@@ -23,7 +24,7 @@ function MainScreen(): JSX.Element {
         <title>{currentCity.name}</title>
       </Helmet>
       <Header />
-      <main className={`page__main page__main--index ${isEmpty && 'page__main--index-empty' }`}>
+      <main className={`page__main page__main--index ${isEmpty && 'page__main--index-empty'}`}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
@@ -35,7 +36,7 @@ function MainScreen(): JSX.Element {
                     to="#"
                     onClick={(evt) => {
                       evt.preventDefault();
-                      dispatch(changeCity(city));
+                      dispatch(setCity(city));
                     }}
                   >
                     <span>{city.name}</span>
@@ -46,11 +47,9 @@ function MainScreen(): JSX.Element {
           </section>
         </div>
         <div className="cities">
-          <CardList
-            currentCity={currentCity}
-            currentOffers={currentOffers}
-            isEmpty={isEmpty}
-          />
+          {isEmpty
+            ? <EmptyCardList></EmptyCardList>
+            : <MainContent currentCity={currentCity} cityOffers={currentOffers}/>}
         </div>
       </main>
     </div>

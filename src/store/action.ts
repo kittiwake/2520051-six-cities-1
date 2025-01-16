@@ -1,8 +1,10 @@
 import { createAction } from '@reduxjs/toolkit';
 import { City } from '../types/main';
 
-// const incremenStep = createAction<number>('game/incrementStep');
+const setCity = createAction<City>('main/setCity');
 
-const changeCity = createAction<City>('main/changeCity');
+const setSorting = createAction<string>('main/setSorting');
+const setActiveCardId = createAction<string | null>('map/setActiveCardId');
 
-export {changeCity};
+
+export {setCity, setSorting, setActiveCardId};

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Header from '../../components/widgets/header/header';
 import { Helmet } from 'react-helmet-async';
 
@@ -28,9 +29,9 @@ function LoginScreen() {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
+              <Link to="#" className="locations__item-link">
                 <span>Amsterdam</span>
-              </a>
+              </Link>
             </div>
           </section>
         </div>
