@@ -1,5 +1,4 @@
 import Header from '../../components/widgets/header/header';
-import PlaceCard from '../../components/card/card';
 import RatingWidget from '../../components/widgets/rating-widget';
 import PremiumClass from '../../components/widgets/premium-class';
 import ReviewsListWidget from '../../components/widgets/review';
