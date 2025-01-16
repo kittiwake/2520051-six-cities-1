@@ -6,6 +6,7 @@ import useMap from '../hooks/use-map';
 import L from 'leaflet';
 
 import 'leaflet/dist/leaflet.css';
+import { useAppSelector } from '../hooks';
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
@@ -35,14 +36,14 @@ type MapDataType = {
 type MapProps = {
   mapData: MapDataType[];
   centerMap: Location;
-  activeCardId: string | null;
   type: 'offer' | 'cities';
 }
 
-function Map({mapData, centerMap, activeCardId, type}: MapProps): JSX.Element {
+function Map({mapData, centerMap, type}: MapProps): JSX.Element {
   const mapRef = useRef<HTMLElement | null>(null);
 
   const map = useMap(mapRef, centerMap);
+  const activeCardId = useAppSelector((state) => state.activeCardId);
 
 
   useEffect(() => {

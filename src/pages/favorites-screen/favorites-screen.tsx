@@ -1,8 +1,9 @@
 import { mock } from '../../mocks';
-import PlaceCard from '../../components/card/card';
 import Header from '../../components/widgets/header/header';
 import Footer from '../../components/widgets/footer/footer';
 import { Helmet } from'react-helmet-async';
+import CardList from '../../components/card-list/card-list';
+import { Link } from 'react-router-dom';
 
 
 const pageMocks = [
@@ -15,17 +16,6 @@ const pageMocks = [
     mocks: mock.slice(4, 5)
   }
 ];
-
-type PlaceCardItem = {
-  id: string;
-  title: string;
-  type: string;
-  price: number;
-  previewImage: string;
-  isFavorite: boolean;
-  isPremium: boolean;
-  rating: number;
-}
 
 function FavoritesScreen(): JSX.Element {
   return (
@@ -43,14 +33,12 @@ function FavoritesScreen(): JSX.Element {
                 <li className="favorites__locations-items" key={mockCityItem.city}>
                   <div className="favorites__locations locations locations--current">
                     <div className="locations__item">
-                      <a className="locations__item-link" href="#">
+                      <Link to="#" className="locations__item-link">
                         <span>{mockCityItem.city}</span>
-                      </a>
+                      </Link>
                     </div>
                   </div>
-                  <div className="favorites__places">
-                    {mockCityItem.mocks.map((cardMocks: PlaceCardItem) => <PlaceCard cardData={cardMocks} key={cardMocks.id} />)}
-                  </div>
+                  <CardList offers={mockCityItem.mocks} typeContent='favorites'></CardList>
                 </li>
               ))}
 

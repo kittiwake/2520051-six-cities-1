@@ -1,6 +1,6 @@
 
 import Header from '../../components/widgets/header/header';
-import CardList from '../../components/card-list/card-list';
+import MainContent from '../../components/main-content/main-content';
 
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
@@ -24,7 +24,7 @@ function MainScreen(): JSX.Element {
         <title>{currentCity.name}</title>
       </Helmet>
       <Header />
-      <main className={`page__main page__main--index ${isEmpty && 'page__main--index-empty' }`}>
+      <main className={`page__main page__main--index ${isEmpty && 'page__main--index-empty'}`}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
@@ -47,12 +47,9 @@ function MainScreen(): JSX.Element {
           </section>
         </div>
         <div className="cities">
-          {isEmpty && <EmptyCardList></EmptyCardList>}
-          {!isEmpty &&
-            <CardList
-              currentCity={currentCity}
-              cityOffers={currentOffers}
-            />}
+          {isEmpty
+            ? <EmptyCardList></EmptyCardList>
+            : <MainContent currentCity={currentCity} cityOffers={currentOffers}/>}
         </div>
       </main>
     </div>
