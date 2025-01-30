@@ -22,3 +22,5 @@ export type Offer = {
   'isPremium': boolean;
   'rating': number;
 }
+
+export type Offers = Offer[]

@@ -1,15 +1,20 @@
+export const BASE_URL = 'https://15.design.htmlacademy.pro/six-cities';
+
+export const breakePoints = {
+  OFFERS: '/offers',
+  // '/offers/{offerId}',
+  // '/offers/{offerId}/nearby',
+  FAVORITE: '/favorite',
+  // '/favorite/{offerId}/{status}'
+  COMMENTS: '/comments/{offerId}', // get post
+  LOGIN: '/login', // get post
+  LOGOUT: '/logout', // delete
+};
+
 export const URL_MARKER_DEFAULT = '../public/img/pin.svg';
 
 export const URL_MARKER_CURRENT = '../public/img/pin-active.svg';
 
-// export const cities = [
-//   'Paris',
-//   'Cologne',
-//   'Brussels',
-//   'Amsterdam',
-//   'Hamburg',
-//   'Dusseldorf'
-// ];
 export const cities = [
   {
     name: 'Paris',
