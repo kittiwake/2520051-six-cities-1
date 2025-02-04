@@ -10,14 +10,15 @@ import { cities } from '../../constant';
 import { useAppDispatch, useAppSelector } from '../../components/hooks';
 import { setCity } from '../../store/action';
 import EmptyCardList from '../../components/card-list/empty-card-list';
+import { State } from '../../types/state';
+
+const filterOffers = (state: State) => state.offers.filter((offer)=> offer.city.name === state.city.name);
 
 function MainScreen(): JSX.Element {
   const currentCity = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.offers);
-  const currentOffers = offers.filter((offer) => offer.city.name === currentCity.name);
+  const currentOffers = useAppSelector(filterOffers);
   const dispatch = useAppDispatch();
   const isEmpty = currentOffers.length === 0;
-  // const cityLocation = currentCity.location;
   return (
     <div className="page page--gray page--main">
       <Helmet>

@@ -12,11 +12,15 @@ import { useAppSelector } from '../../components/hooks';
 import { useParams } from 'react-router-dom';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import CardList from '../../components/card-list/card-list';
+// import { State } from '../../types/state';
 
 const nearestMocks = mock.slice(7, 10);
 
+// const findOffers = (state: State, id: string) => state.offers.find((offer)=> offer.id === id);
+
 function OfferScreen({authorizationStatus}: {authorizationStatus: AuthorizationStatus}): JSX.Element {
   const { id } = useParams<{ id: string }>();
+  // const currentOffer = useAppSelector((state) => id ? findOffers(state, id) : []); // не получилось
   const offers = useAppSelector((state) => state.offers);
   const currentOffer = offers.find((offer) => offer.id === id);
   if(!currentOffer){

@@ -1,21 +1,23 @@
 import { createReducer, PayloadAction } from '@reduxjs/toolkit';
-import { setCity, setSorting, setActiveCardId } from './action';
+import { setCity, setSorting, setActiveCardId, loadOffers, setDataLoadingStatus } from './action';
 import { cities } from '../constant';
-import { mock } from '../mocks';
 import { PlacesOption } from '../transfers';
+import { Offers } from '../types/main';
 
 interface State {
   city: typeof cities[0];
-  offers: typeof mock;
+  offers: Offers;
   sorting: string;
   activeCardId: string | null;
+  isDataLoading: boolean;
 }
 
 const initialState: State = {
   city: cities[0],
-  offers: mock,
+  offers: [],
   sorting: PlacesOption.POPULAR,
   activeCardId: null,
+  isDataLoading: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -28,6 +30,13 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(setActiveCardId, (state, action: PayloadAction<string | null>) => {
     state.activeCardId = action.payload;
   });
+  builder.addCase(loadOffers, (state, action) => {
+    state.offers = action.payload;
+  });
+  builder.addCase(setDataLoadingStatus, (state, action) => {
+    state.isDataLoading = action.payload;
+  });
+
 });
 
 export {reducer};
