@@ -1,5 +1,4 @@
 import {
-  BrowserRouter,
   Routes,
   Route,
 } from 'react-router-dom';
@@ -13,6 +12,8 @@ import NotFoundScreen from '../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../components/private-route/private-route';
 import LoadingScreen from '../pages/loading-screen/loading-screen';
 import { useAppSelector } from '../components/hooks';
+import HistoryRouter from '../components/history-router/history-router';
+import browserHistory from '../browser-history';
 
 const authorizationStatus = AuthorizationStatus.Auth;
 
@@ -27,7 +28,7 @@ function App(): JSX.Element {
   }
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           path={AppRoute.Main}
@@ -56,7 +57,7 @@ function App(): JSX.Element {
           element={<NotFoundScreen />}
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 
