@@ -1,12 +1,15 @@
 import { createReducer, PayloadAction } from '@reduxjs/toolkit';
-import { setCity, setSorting, setActiveCardId, loadOffers, setDataLoadingStatus, setAuthorizationStatus, setError, setUser } from './action';
+import { setCity, setSorting, setActiveCardId, loadOffers, setDataLoadingStatus, setAuthorizationStatus, setError, setUser, loadFavorites } from './action';
 import { AuthorizationStatus, cities } from '../constant';
 import { PlacesOption } from '../transfers';
-import { Offers, User } from '../types/main';
+import { Offers } from '../types/main';
+import { User } from '../types/user';
 
 interface State {
   city: typeof cities[0];
   offers: Offers;
+  favorites: Offers;
+  countFavorites: number;
   sorting: string;
   activeCardId: string | null;
   isDataLoading: boolean;
@@ -18,6 +21,8 @@ interface State {
 const initialState: State = {
   city: cities[0],
   offers: [],
+  favorites: [],
+  countFavorites: 0,
   sorting: PlacesOption.POPULAR,
   activeCardId: null,
   isDataLoading: false,
@@ -42,6 +47,10 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
+    })
+    .addCase(loadFavorites, (state, action) => {
+      state.favorites = action.payload;
+      state.countFavorites = state.favorites.length;
     })
     .addCase(setDataLoadingStatus, (state, action) => {
       state.isDataLoading = action.payload;

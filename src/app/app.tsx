@@ -10,22 +10,19 @@ import OfferScreen from '../pages/offer-screen/offer-screen';
 import LoginScreen from '../pages/login-screen/login-screen';
 import NotFoundScreen from '../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../components/private-route/private-route';
-import LoadingScreen from '../pages/loading-screen/loading-screen';
-import { useAppSelector } from '../components/hooks';
+import { useAppDispatch } from '../components/hooks';
 import HistoryRouter from '../components/history-router/history-router';
 import browserHistory from '../browser-history';
+import { checkAuthAction } from '../store/api-actions';
+import { useEffect } from 'react';
 
 const authorizationStatus = AuthorizationStatus.Auth;
 
 function App(): JSX.Element {
-
-  const isDataLoading = useAppSelector((state) => state.isDataLoading);
-
-  if (isDataLoading) {
-    return (
-      <LoadingScreen />
-    );
-  }
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(checkAuthAction());
+  }, [dispatch]);
 
   return (
     <HistoryRouter history={browserHistory}>

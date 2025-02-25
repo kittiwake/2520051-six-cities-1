@@ -2,9 +2,9 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import { State, AppDispatch } from '../types/state';
 import { AxiosInstance } from 'axios';
 import { AppRoute, AuthorizationStatus, endPoints, TIMEOUT_SHOW_ERROR } from '../constant';
-import { Offers, User } from '../types/main';
+import { Offers} from '../types/main';
 import { loadFavorites, loadOffers, redirectToRoute, setAuthorizationStatus, setDataLoadingStatus, setError, setUser } from './action';
-import { AuthData, UserData } from '../types/user';
+import { AuthData, User } from '../types/user';
 import { dropToken, saveToken } from '../services/token';
 import { store } from './';
 
@@ -58,12 +58,12 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
       const {data} = await api.get<User>(endPoints.LOGIN);
       dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
       dispatch(setUser(data));
+      dispatch(fetchFavoritesAction());
     } catch {
       dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
     }
   },
 );
-
 
 export const loginAction = createAsyncThunk<void, AuthData, {
   dispatch: AppDispatch;
@@ -72,9 +72,11 @@ export const loginAction = createAsyncThunk<void, AuthData, {
 }>(
   'user/login',
   async ({login: email, password}, {dispatch, extra: api}) => {
-    const {data: {token}} = await api.post<UserData>(endPoints.LOGIN, {email, password});
-    saveToken(token);
+    const {data} = await api.post<User>(endPoints.LOGIN, {email, password});
+    saveToken(data.token);
+    dispatch(setUser(data));
     dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
+    dispatch(fetchFavoritesAction());
     dispatch(redirectToRoute(AppRoute.Favorites));
   },
 );
@@ -89,6 +91,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     await api.delete(endPoints.LOGOUT);
     dropToken();
     dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+    dispatch(loadFavorites([]));
   },
 );
 
