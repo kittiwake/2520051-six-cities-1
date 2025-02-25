@@ -9,15 +9,31 @@ import { cities } from '../../constant';
 
 import { useAppDispatch, useAppSelector } from '../../components/hooks';
 import { setCity } from '../../store/action';
-import EmptyCardList from '../../components/card-list/empty-card-list';
+import EmptyCardList from '../../components/empty-list/empty-card-list';
 import { State } from '../../types/state';
+import { fetchOffersAction } from '../../store/api-actions';
+import { useEffect } from 'react';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 const filterOffers = (state: State) => state.offers.filter((offer)=> offer.city.name === state.city.name);
 
 function MainScreen(): JSX.Element {
+  const dispatch = useAppDispatch();
+  useEffect(()=>{
+    dispatch(fetchOffersAction());
+
+  }, [dispatch]);
+
   const currentCity = useAppSelector((state) => state.city);
   const currentOffers = useAppSelector(filterOffers);
-  const dispatch = useAppDispatch();
+  const isDataLoading = useAppSelector((state) => state.isDataLoading);
+
+  if (isDataLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   const isEmpty = currentOffers.length === 0;
   return (
     <div className="page page--gray page--main">

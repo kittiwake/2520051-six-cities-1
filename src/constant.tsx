@@ -1,6 +1,9 @@
 export const BASE_URL = 'https://15.design.htmlacademy.pro/six-cities';
+export const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
 
-export const breakePoints = {
+export const TIMEOUT_SHOW_ERROR = 2000;
+
+export const endPoints = {
   OFFERS: '/offers',
   // '/offers/{offerId}',
   // '/offers/{offerId}/nearby',
