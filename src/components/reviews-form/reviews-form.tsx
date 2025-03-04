@@ -1,15 +1,32 @@
-import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
+import { ChangeEvent, FormEvent, Fragment } from 'react';
 import { reviewRatings } from '../../constant';
+import { addCommentAction } from '../../store/api-actions';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { setReviewComment, setReviewRaiting } from '../../store/action';
 
 function ReviewsForm() {
-  const [reviewState, setReviewState] = useState({
-    rating: 0,
-    review: ''
-  });
+  const dispatch = useAppDispatch();
+
+  const currentOffer = useAppSelector((state) => state.currentOffer);
+  const reviewState = useAppSelector((state) => state.review);
+  const isReviewLoading = useAppSelector((state) => state.isReviewLoading);
+
+  const handleSubmit = () => {
+    if (!currentOffer || !reviewState.rating || !reviewState.comment) {
+      return;
+    }
+    dispatch(addCommentAction({
+      offerId: currentOffer.id,
+      comment: reviewState.comment,
+      rating: reviewState.rating,
+    }));
+  };
+
   return (
-    <form className="reviews__form form" action="#" method="post"
+    <form className="reviews__form form"
       onSubmit={(evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
+        handleSubmit();
       }}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
@@ -20,11 +37,10 @@ function ReviewsForm() {
           return (
             <Fragment key={rating}>
               <input className="form__rating-input visually-hidden" name="rating" value={`${rating}`} id={id} type="radio"
+                disabled={isReviewLoading}
+                checked={reviewState.rating === rating}
                 onChange={() => {
-                  setReviewState((prevReviewState) => ({
-                    ...prevReviewState,
-                    rating: rating,
-                  }));
+                  dispatch(setReviewRaiting(rating));
                 }}
               />
               <label htmlFor={id} className="reviews__rating-label form__rating-label" title={title}>
@@ -38,13 +54,11 @@ function ReviewsForm() {
       </div>
       <textarea className="reviews__textarea form__textarea" id="review" name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        value={reviewState.review}
+        value={reviewState.comment}
+        disabled={isReviewLoading}
         onChange={({ target }: ChangeEvent<HTMLTextAreaElement>) => {
-          setReviewState((prevReviewState) => ({
-            ...prevReviewState,
-            review: target.value
-          }));
-          target.textContent = reviewState.review;
+          dispatch(setReviewComment(target.value.slice(0, 300)));
+          target.textContent = reviewState.comment;
         }}
       />
       <div className="reviews__button-wrapper">
@@ -52,7 +66,7 @@ function ReviewsForm() {
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
         <button className="reviews__submit form__submit button" type="submit"
-          disabled={reviewState.rating === 0 || reviewState.review.length < 50}
+          disabled={reviewState.rating === 0 || reviewState.comment.length < 50 || isReviewLoading}
         >
           Submit
         </button>

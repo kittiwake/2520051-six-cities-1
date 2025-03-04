@@ -5,11 +5,11 @@ export const TIMEOUT_SHOW_ERROR = 2000;
 
 export const endPoints = {
   OFFERS: '/offers',
-  // '/offers/{offerId}',
-  // '/offers/{offerId}/nearby',
+  OFFER: '/offers/:offerId',
+  NEARBY: '/offers/:offerId/nearby',
   FAVORITE: '/favorite',
   // '/favorite/{offerId}/{status}'
-  COMMENTS: '/comments/{offerId}', // get post
+  COMMENTS: '/comments/:offerId', // get post
   LOGIN: '/login', // get post
   LOGOUT: '/logout', // delete
 };
@@ -104,3 +104,8 @@ export const reviewRatings = [
     title: 'terribly'
   },
 ];
+
+export const initReview = {
+  rating: 0,
+  comment: ''
+};

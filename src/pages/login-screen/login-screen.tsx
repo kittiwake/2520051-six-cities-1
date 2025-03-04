@@ -25,9 +25,6 @@ function LoginScreen() {
           if (loginAction.fulfilled.match(actionResult)) {
             navigate('/');
           }
-        })
-        .catch((error) => {
-          console.error('Login failed:', error);
         });
     }
   };
