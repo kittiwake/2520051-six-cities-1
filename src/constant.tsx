@@ -82,6 +82,15 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+export enum NameSpace {
+  App = 'APP',
+  Main = 'MAIN',
+  Offer = 'OFFER',
+  User = 'USER',
+  Comments = 'COMMENTS',
+  Map = 'MAP',
+}
+
 export const reviewRatings = [
   {
     rating: 5,
