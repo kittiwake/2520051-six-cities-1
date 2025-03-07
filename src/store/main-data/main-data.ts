@@ -1,9 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { NameSpace } from '../../constant';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { cities, NameSpace } from '../../constant';
 import { fetchFavoritesAction, fetchOffersAction } from '../api-actions';
 import { MainData } from '../../types/state';
+import { PlacesOption } from '../../transfers';
 
 const initialState: MainData = {
+  city: cities[0],
+  sorting: PlacesOption.POPULAR,
   offers: [],
   favorites: [],
   countFavorites: 0,
@@ -14,7 +17,15 @@ const initialState: MainData = {
 export const mainData = createSlice({
   name: NameSpace.Main,
   initialState,
-  reducers: {},
+  reducers: {
+    setCity(state, action: PayloadAction<MainData['city']>) {
+      state.city = action.payload;
+    },
+    setSorting(state, action: PayloadAction<string>) {
+      state.sorting = action.payload;
+    },
+
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchOffersAction.fulfilled, (state, action) => {

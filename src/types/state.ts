@@ -15,6 +15,8 @@ export type MainData = {
   countFavorites: number;
   isDataLoading: boolean;
   error: string | null;
+  city: City;
+  sorting: string;
 }
 
 export type OfferData = {
@@ -25,15 +27,9 @@ export type OfferData = {
   error: string | null;
 }
 
-export type MainProcess = {
-  city: City;
-  sorting: string;
-}
-
 export type MapProcess = {
   activeCardId: string | null;
 }
-
 
 export type CommentsProcess = {
   comments: Comment[];
