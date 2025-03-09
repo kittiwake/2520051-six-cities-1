@@ -1,11 +1,12 @@
 import { PlacesOption } from '../../transfers';
 import { useAppSelector, useAppDispatch } from '../../components/hooks';
-import { setSorting } from '../../store/action';
-import { useState } from 'react';
+import { setSorting } from '../../store/main-data/main-data';
+import { memo, useState } from 'react';
+import { getSorting } from '../../store/main-data/selectors';
 
 
 function SortingList(): JSX.Element {
-  const sortingType = useAppSelector((state) => state.sorting);
+  const sortingType = useAppSelector(getSorting);
   const dispatch = useAppDispatch();
   const [isOpened, setOpening] = useState<boolean>(false);
 
@@ -42,4 +43,5 @@ function SortingList(): JSX.Element {
   );
 }
 
-export default SortingList;
+const MemorizedSortingList = memo(SortingList);
+export default MemorizedSortingList;

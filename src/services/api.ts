@@ -1,9 +1,8 @@
 import axios, {AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig} from 'axios';
 import { BASE_URL } from '../constant';
 import { getToken } from './token';
-import { processErrorHandle } from './process-error-handle';
 import { StatusCodes } from 'http-status-codes';
-
+// import {toast} from 'react-toastify';
 
 type DetailMessageType = {
   type: string;
@@ -43,7 +42,7 @@ export const createAPI = (): AxiosInstance => {
       if (error.response && shouldDisplayError(error.response)) {
         const detailMessage = (error.response.data);
 
-        processErrorHandle(detailMessage.message);
+        // toast.warn(detailMessage.message);
       }
 
       throw error;

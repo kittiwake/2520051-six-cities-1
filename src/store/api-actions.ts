@@ -6,14 +6,12 @@ import {
   endPoints,
 } from '../constant';
 import { Offers} from '../types/main';
-import {
-  redirectToRoute,
-  setReviewLoadingStatus,
-} from './action';
+import { redirectToRoute } from './action';
 import { AuthData, User } from '../types/user';
 import { dropToken, saveToken } from '../services/token';
 import { OfferInfo, Comment } from '../types/offer';
 import { sortByDateDescending } from '../utils';
+import { resetFavorites } from './main-data/main-data';
 
 
 // export const clearErrorAction = createAsyncThunk(
@@ -86,11 +84,32 @@ export const fetchCommentsAction = createAsyncThunk<Comment[], string, {
   },
 );
 
+type FavoriteStatusPayload = {
+  'offerId': string;
+  'isFavorite': boolean;
+};
+
+export const fetchFavoritesStatusAction = createAsyncThunk<OfferInfo, FavoriteStatusPayload, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchFavoritesStatus',
+  async ({offerId, isFavorite}, {extra: api}) => {
+
+    const {data} = await api.post<OfferInfo>(endPoints.FAVORITE_STATUS
+      .replace(':offerId', offerId)
+      .replace(':status', isFavorite ? '1' : '0')
+    );
+    return(data);
+  },
+);
+
 type AddingCommentPayload = {
   'offerId': string;
   'comment': string;
   'rating': number;
-}
+};
 
 export const addCommentAction = createAsyncThunk<Comment, AddingCommentPayload, {
   dispatch: AppDispatch;
@@ -98,8 +117,7 @@ export const addCommentAction = createAsyncThunk<Comment, AddingCommentPayload, 
   extra: AxiosInstance;
 }>(
   'data/addComment',
-  async ({offerId, comment, rating}, {dispatch, extra: api}) => {
-    dispatch(setReviewLoadingStatus(true));
+  async ({offerId, comment, rating}, {extra: api}) => {
     const {data} = await api.post<Comment>(endPoints.COMMENTS.replace(':offerId', offerId), { comment, rating });
     return(data);
   },
@@ -139,10 +157,10 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   extra: AxiosInstance;
 }>(
   'user/logout',
-  async (_arg, {extra: api}) => {
+  async (_arg, {dispatch, extra: api}) => {
     await api.delete(endPoints.LOGOUT);
     dropToken();
-    // dispatch(loadFavorites([]));
+    dispatch(resetFavorites());
   },
 );
 

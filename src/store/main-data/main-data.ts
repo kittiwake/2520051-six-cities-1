@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { cities, NameSpace } from '../../constant';
-import { fetchFavoritesAction, fetchOffersAction } from '../api-actions';
+import { fetchFavoritesAction, fetchFavoritesStatusAction, fetchOffersAction } from '../api-actions';
 import { MainData } from '../../types/state';
 import { PlacesOption } from '../../transfers';
 
@@ -24,7 +24,10 @@ export const mainData = createSlice({
     setSorting(state, action: PayloadAction<string>) {
       state.sorting = action.payload;
     },
-
+    resetFavorites(state) {
+      state.favorites = [];
+      state.countFavorites = 0;
+    },
   },
   extraReducers(builder) {
     builder
@@ -50,6 +53,15 @@ export const mainData = createSlice({
       .addCase(fetchFavoritesAction.rejected, (state) => {
         state.isDataLoading = false;
         state.error = 'Ошибка загрузки';
+      })
+      .addCase(fetchFavoritesStatusAction.fulfilled, (state, action) => {
+        if (action.payload.isFavorite) {
+          // state.favorites = [...state.favorites, action.payload.offer];
+          state.countFavorites++;
+        }
+
       });
   }
 });
+
+export const { setCity, setSorting, resetFavorites } = mainData.actions;

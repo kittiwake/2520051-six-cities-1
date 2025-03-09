@@ -2,7 +2,7 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../constant';
+import { AppRoute } from '../constant';
 
 import MainScreen from '../pages/main-screen/main-screen';
 import FavoritesScreen from '../pages/favorites-screen/favorites-screen';
@@ -16,7 +16,6 @@ import browserHistory from '../browser-history';
 import { checkAuthAction } from '../store/api-actions';
 import { useEffect } from 'react';
 
-const authorizationStatus = AuthorizationStatus.Auth;
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -34,9 +33,7 @@ function App(): JSX.Element {
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivateRoute
-              authorizationStatus={authorizationStatus}
-            >
+            <PrivateRoute>
               <FavoritesScreen />
             </PrivateRoute>
           }

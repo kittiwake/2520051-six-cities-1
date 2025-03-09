@@ -13,17 +13,20 @@ import NotFoundScreen from '../not-found-screen/not-found-screen';
 import CardList from '../../components/card-list/card-list';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { fetchCommentsAction, fetchNearbyOffersAction, fetchOfferAction } from '../../store/api-actions';
-import { useEffect } from 'react';
+import { memo, useEffect } from 'react';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { getNearest, getNearestLoadingStatus, getOffer, getOfferLoadingStatus } from '../../store/offer-data/selectors';
+import { getComments, getCommentsLoadingStatus, getCountComments } from '../../store/comments-data/selectors';
 
 function OfferScreen(): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
-  const isDataLoading = useAppSelector((state) => state.isDataLoading);
-  const isCommentsLoading = useAppSelector((state) => state.isCommentsLoading);
-  const isNearestLoading = useAppSelector((state) => state.isNearestLoading);
-  const countComments = useAppSelector((state) => state.countComments);
+  const isDataLoading = useAppSelector(getOfferLoadingStatus);
+  const isCommentsLoading = useAppSelector(getCommentsLoadingStatus);
+  const isNearestLoading = useAppSelector(getNearestLoadingStatus);
+  const countComments = useAppSelector(getCountComments);
 
   const { id } = useParams<{ id: string }>();
   useEffect(() =>{
@@ -33,9 +36,9 @@ function OfferScreen(): JSX.Element {
       dispatch(fetchCommentsAction(id));
     }
   }, [dispatch, id]);
-  const currentOffer = useAppSelector((state) => state.currentOffer);
-  const nearestOffers = useAppSelector((state) => state.nearestOffers.slice(0,3));
-  const comments = useAppSelector((state) => state.comments.slice(0,10));
+  const currentOffer = useAppSelector(getOffer);
+  const nearestOffers = useAppSelector(getNearest);
+  const comments = useAppSelector(getComments);
 
   if(!currentOffer){
     return (
@@ -157,4 +160,5 @@ function OfferScreen(): JSX.Element {
   );
 }
 
-export default OfferScreen;
+const MemorizedOfferScreen = memo(OfferScreen);
+export default MemorizedOfferScreen;

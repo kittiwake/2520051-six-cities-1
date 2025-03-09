@@ -11,8 +11,10 @@ export const mapProcess = createSlice({
   name: NameSpace.Map,
   initialState,
   reducers: {
-    setCity(state, action: PayloadAction<string>) {
+    setActiveCardId(state, action: PayloadAction<string>) {
       state.activeCardId = action.payload;
     },
   },
 });
+
+export const { setActiveCardId } = mapProcess.actions;

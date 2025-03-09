@@ -1,6 +1,7 @@
 import Navigation from '../navigation/navigation';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../../constant';
+import { memo } from 'react';
 
 
 function Header({ navbar = true }: { navbar?: boolean }): JSX.Element {
@@ -20,4 +21,5 @@ function Header({ navbar = true }: { navbar?: boolean }): JSX.Element {
   );
 }
 
-export default Header;
+const MemorizedHeader = memo(Header);
+export default MemorizedHeader;

@@ -3,6 +3,9 @@ import PremiumClass from '../widgets/premium-class';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../constant';
 import classNames from 'classnames';
+import { fetchFavoritesStatusAction } from '../../store/api-actions';
+import { useAppDispatch } from '../hooks';
+import { memo } from 'react';
 
 type PlaceCardItem = {
   id: string;
@@ -22,6 +25,7 @@ type PlaceCardProps = {
 }
 
 function PlaceCard({ cardData, onMouseMove, type = 'vertical' }: PlaceCardProps): JSX.Element {
+  const dispatch = useAppDispatch();
   return (
     <article
       className={classNames(
@@ -58,7 +62,15 @@ function PlaceCard({ cardData, onMouseMove, type = 'vertical' }: PlaceCardProps)
             <b className="place-card__price-value">&euro;{cardData.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button button ${cardData.isFavorite ? 'place-card__bookmark-button--active' : ''}`} type="button">
+          <button
+            className={`place-card__bookmark-button button ${cardData.isFavorite ? 'place-card__bookmark-button--active' : ''}`}
+            type="button"
+            onClick={() => {
+              dispatch(fetchFavoritesStatusAction({
+                offerId: cardData.id,
+                isFavorite: !(cardData.isFavorite)}));
+            }}
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
@@ -69,7 +81,7 @@ function PlaceCard({ cardData, onMouseMove, type = 'vertical' }: PlaceCardProps)
         <RatingWidget type='place-card' rating={cardData.rating} />
 
         <h2 className="place-card__name">
-          <Link to={AppRoute.Offer}>{cardData.title}</Link>
+          <Link to={AppRoute.Offer.replace(':id', cardData.id)}>{cardData.title}</Link>
         </h2>
         <p className="place-card__type">{cardData.type}</p>
       </div>
@@ -77,4 +89,5 @@ function PlaceCard({ cardData, onMouseMove, type = 'vertical' }: PlaceCardProps)
   );
 }
 
-export default PlaceCard;
+const MemorizedPlaceCard = memo(PlaceCard);
+export default MemorizedPlaceCard;

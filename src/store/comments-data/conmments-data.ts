@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { initReview, NameSpace } from '../../constant';
 import { addCommentAction, fetchCommentsAction } from '../api-actions';
 import { CommentsProcess } from '../../types/state';
@@ -20,7 +20,14 @@ const initialState: CommentsProcess = {
 export const commentsData = createSlice({
   name: NameSpace.Comments,
   initialState,
-  reducers: {},
+  reducers: {
+    setReviewComment(state, action: PayloadAction<string>) {
+      state.review.comment = action.payload;
+    },
+    setReviewRaiting(state, action: PayloadAction<number>) {
+      state.review.rating = action.payload;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchCommentsAction.fulfilled, (state, action) => {
@@ -52,3 +59,5 @@ export const commentsData = createSlice({
 
   }
 });
+
+export const { setReviewComment, setReviewRaiting } = commentsData.actions;

@@ -1,23 +1,25 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../../constant';
-import { MouseEvent } from 'react';
+import { memo, MouseEvent, useCallback } from 'react';
 import { logoutAction } from '../../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getAuthorizationStatus, getUser } from '../../../store/user-process/selectors';
+import { getCountFavorites } from '../../../store/main-data/selectors';
 
 
-function Navigation() {
+function DemoNavigation():JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  const userInfo = useAppSelector((state) => state.user);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const countFavorites = useAppSelector((state) => state.countFavorites);
+  const userInfo = useAppSelector(getUser);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const countFavorites = useAppSelector(getCountFavorites);
 
-  const handleClickOut = (evt: MouseEvent<HTMLAnchorElement>) => {
+  const handleClickOut = useCallback((evt: MouseEvent<HTMLAnchorElement>) => {
     evt.preventDefault();
 
     dispatch(logoutAction());
-  };
+  }, [dispatch]);
 
   if (authorizationStatus === AuthorizationStatus.Auth) {
     return (
@@ -59,4 +61,5 @@ function Navigation() {
   }
 }
 
+const Navigation = memo(DemoNavigation);
 export default Navigation;

@@ -8,7 +8,7 @@ export const endPoints = {
   OFFER: '/offers/:offerId',
   NEARBY: '/offers/:offerId/nearby',
   FAVORITE: '/favorite',
-  // '/favorite/{offerId}/{status}'
+  FAVORITE_STATUS: '/favorite/:offerId/:status',
   COMMENTS: '/comments/:offerId', // get post
   LOGIN: '/login', // get post
   LOGOUT: '/logout', // delete

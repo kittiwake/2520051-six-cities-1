@@ -1,6 +1,7 @@
 import RatingWidget from './rating-widget';
 import { getDatetimeFormat } from '../../utils';
 import {DateFormat} from '../../transfers';
+import { memo } from 'react';
 
 type ReviewItemProps = {
   id: string;
@@ -44,4 +45,5 @@ function ReviewsListWidget(commentList: Array<ReviewItemProps>) {
   );
 }
 
-export default ReviewsListWidget;
+const MemorizedReviewsListWidget = memo(ReviewsListWidget);
+export default MemorizedReviewsListWidget;

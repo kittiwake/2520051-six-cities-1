@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 
 function Footer(): JSX.Element {
@@ -9,5 +10,5 @@ function Footer(): JSX.Element {
     </footer>
   );
 }
-
-export default Footer;
+const MemorizedFooter = memo(Footer);
+export default MemorizedFooter;

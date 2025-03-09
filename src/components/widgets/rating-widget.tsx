@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 type RatingWidgetProps = {
   rating: number;
   type: string;
@@ -14,4 +16,5 @@ const RatingWidget = ({ rating, type, showValue = false}: RatingWidgetProps) => 
 
 );
 
-export default RatingWidget;
+const MemorizedRatingWidget = memo(RatingWidget);
+export default MemorizedRatingWidget;

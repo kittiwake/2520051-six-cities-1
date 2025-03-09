@@ -1,8 +1,10 @@
 import classNames from 'classnames';
-import { setActiveCardId } from '../../store/action';
+import { setActiveCardId } from '../../store/map-process/map-process';
 import { Offer } from '../../types/main';
 import PlaceCard from '../card/card';
 import { useAppDispatch, useAppSelector } from '../hooks';
+import { getActiveCardId } from '../../store/map-process/selectors';
+import { memo, useCallback } from 'react';
 
 type CardListProps = {
   offers: Offer[];
@@ -10,13 +12,13 @@ type CardListProps = {
 }
 
 function CardList({offers, typeContent = 'cities'}: CardListProps): JSX.Element {
-  const activeCardId = useAppSelector((state) => state.activeCardId);
+  const activeCardId = useAppSelector(getActiveCardId);
   const dispatch = useAppDispatch();
-  function handleCardHover(cardId: string | null): void {
-    if (activeCardId !== cardId) {
+  const handleCardHover = useCallback((cardId: string | null): void => {
+    if (cardId && activeCardId !== cardId) {
       dispatch(setActiveCardId(cardId));
     }
-  }
+  }, [dispatch]);
   return (
     <div className={classNames(
       {'places__list': typeContent !== 'favorites'},
@@ -37,5 +39,5 @@ function CardList({offers, typeContent = 'cities'}: CardListProps): JSX.Element 
     </div>
   );
 }
-
-export default CardList;
+const MemorizedCardList = memo(CardList);
+export default MemorizedCardList;

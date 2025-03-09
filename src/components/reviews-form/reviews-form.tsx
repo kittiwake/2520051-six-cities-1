@@ -2,14 +2,16 @@ import { ChangeEvent, FormEvent, Fragment } from 'react';
 import { reviewRatings } from '../../constant';
 import { addCommentAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { setReviewComment, setReviewRaiting } from '../../store/action';
+import { setReviewComment, setReviewRaiting } from '../../store/comments-data/conmments-data';
+import { getOffer } from '../../store/offer-data/selectors';
+import { getReview, getReviewLoadingStatus } from '../../store/comments-data/selectors';
 
 function ReviewsForm() {
   const dispatch = useAppDispatch();
 
-  const currentOffer = useAppSelector((state) => state.currentOffer);
-  const reviewState = useAppSelector((state) => state.review);
-  const isReviewLoading = useAppSelector((state) => state.isReviewLoading);
+  const currentOffer = useAppSelector(getOffer);
+  const reviewState = useAppSelector(getReview);
+  const isReviewLoading = useAppSelector(getReviewLoadingStatus);
 
   const handleSubmit = () => {
     if (!currentOffer || !reviewState.rating || !reviewState.comment) {
