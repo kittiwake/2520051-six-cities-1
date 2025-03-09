@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import { Offer } from './types/main';
 import { PlacesOption } from './transfers';
+import { Comment } from './types/offer';
 dayjs.extend(duration);
 
 
@@ -22,3 +23,5 @@ export const getSortedOffers = ((data: Offer[], sortingType: string) => {
       return (data);
   }
 });
+
+export const sortByDateDescending = (data: Comment[]): Comment[] => data.sort((a, b) => dayjs(b.date).diff(dayjs(a.date)));

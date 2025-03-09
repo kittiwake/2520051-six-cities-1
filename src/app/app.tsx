@@ -43,7 +43,7 @@ function App(): JSX.Element {
         />
         <Route
           path={AppRoute.Offer}
-          element={<OfferScreen authorizationStatus={authorizationStatus} />}
+          element={<OfferScreen/>}
         />
         <Route
           path={AppRoute.Login}
