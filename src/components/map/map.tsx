@@ -49,7 +49,7 @@ function Map({mapData, centerMap, type}: MapProps): JSX.Element {
 
     mapData.forEach((item) => {
       const { latitude, longitude } = item.location;
-      L.marker([latitude, longitude], {icon: item.id === activeCardId ? currentCustomIcon : defaultCustomIcon})
+      L.marker([latitude, longitude], {icon: item.id === activeCardId && type !== 'offer' ? currentCustomIcon : defaultCustomIcon})
         .addTo(markerLayer);
     });
     if (type === 'offer') {

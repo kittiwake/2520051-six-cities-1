@@ -5,7 +5,7 @@ import {
   AppRoute,
   endPoints,
 } from '../constant';
-import { Offers} from '../types/main';
+import { Offer, Offers} from '../types/main';
 import { redirectToRoute } from './action';
 import { AuthData, User } from '../types/user';
 import { dropToken, saveToken } from '../services/token';
@@ -89,7 +89,7 @@ type FavoriteStatusPayload = {
   'isFavorite': boolean;
 };
 
-export const fetchFavoritesStatusAction = createAsyncThunk<OfferInfo, FavoriteStatusPayload, {
+export const fetchFavoritesStatusAction = createAsyncThunk<Offer, FavoriteStatusPayload, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -97,7 +97,7 @@ export const fetchFavoritesStatusAction = createAsyncThunk<OfferInfo, FavoriteSt
   'data/fetchFavoritesStatus',
   async ({offerId, isFavorite}, {extra: api}) => {
 
-    const {data} = await api.post<OfferInfo>(endPoints.FAVORITE_STATUS
+    const {data} = await api.post<Offer>(endPoints.FAVORITE_STATUS
       .replace(':offerId', offerId)
       .replace(':status', isFavorite ? '1' : '0')
     );
@@ -161,6 +161,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     await api.delete(endPoints.LOGOUT);
     dropToken();
     dispatch(resetFavorites());
+    dispatch(fetchOffersAction());
   },
 );
 

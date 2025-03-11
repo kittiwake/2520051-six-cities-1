@@ -3,6 +3,7 @@ import duration from 'dayjs/plugin/duration';
 import { Offer } from './types/main';
 import { PlacesOption } from './transfers';
 import { Comment } from './types/offer';
+import { cities } from './constant';
 dayjs.extend(duration);
 
 
@@ -23,5 +24,7 @@ export const getSortedOffers = ((data: Offer[], sortingType: string) => {
       return (data);
   }
 });
+
+export const getRandomCity = () => (cities[Math.floor(Math.random() * cities.length)]);
 
 export const sortByDateDescending = (data: Comment[]): Comment[] => data.sort((a, b) => dayjs(b.date).diff(dayjs(a.date)));

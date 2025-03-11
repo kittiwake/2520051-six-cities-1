@@ -55,9 +55,19 @@ export const mainData = createSlice({
         state.error = 'Ошибка загрузки';
       })
       .addCase(fetchFavoritesStatusAction.fulfilled, (state, action) => {
+        const indexOffers = state.offers.findIndex((offer) => offer.id === action.payload.id);
+        if(indexOffers !== -1){
+          state.offers[indexOffers].isFavorite = action.payload.isFavorite;
+        }
         if (action.payload.isFavorite) {
-          // state.favorites = [...state.favorites, action.payload.offer];
+          state.favorites.push(action.payload);
           state.countFavorites++;
+        }else{
+          const index = state.favorites.findIndex((favorite) => favorite.id === action.payload.id);
+          if (index !== -1) {
+            state.favorites.splice(index, 1);
+          }
+          state.countFavorites--;
         }
 
       });

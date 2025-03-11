@@ -1,11 +1,12 @@
 import RatingWidget from '../widgets/rating-widget';
 import PremiumClass from '../widgets/premium-class';
-import { Link } from 'react-router-dom';
-import { AppRoute } from '../../constant';
+import { Link, useNavigate } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus } from '../../constant';
 import classNames from 'classnames';
 import { fetchFavoritesStatusAction } from '../../store/api-actions';
-import { useAppDispatch } from '../hooks';
-import { memo } from 'react';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { memo, useCallback } from 'react';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 type PlaceCardItem = {
   id: string;
@@ -26,6 +27,17 @@ type PlaceCardProps = {
 
 function PlaceCard({ cardData, onMouseMove, type = 'vertical' }: PlaceCardProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const handleFavoriteClick = useCallback(() => {
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      navigate(AppRoute.Login);
+      return;
+    }
+    dispatch(fetchFavoritesStatusAction({offerId: cardData.id,
+      isFavorite: !(cardData.isFavorite)}));
+    cardData.isFavorite = true;
+  }, [authorizationStatus, navigate, dispatch, cardData]);
   return (
     <article
       className={classNames(
@@ -65,11 +77,7 @@ function PlaceCard({ cardData, onMouseMove, type = 'vertical' }: PlaceCardProps)
           <button
             className={`place-card__bookmark-button button ${cardData.isFavorite ? 'place-card__bookmark-button--active' : ''}`}
             type="button"
-            onClick={() => {
-              dispatch(fetchFavoritesStatusAction({
-                offerId: cardData.id,
-                isFavorite: !(cardData.isFavorite)}));
-            }}
+            onClick={handleFavoriteClick}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>

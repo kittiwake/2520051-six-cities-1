@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../constant';
-import { fetchNearbyOffersAction, fetchOfferAction } from '../api-actions';
+import { fetchFavoritesStatusAction, fetchNearbyOffersAction, fetchOfferAction } from '../api-actions';
 import { OfferData } from '../../types/state';
 
 
@@ -29,6 +29,11 @@ export const offerData = createSlice({
       .addCase(fetchOfferAction.rejected, (state) => {
         state.error = 'Ошибка загрузки'; //добавить rejectWithValue в fetchOfferAction
         state.isDataLoading = false;
+      })
+      .addCase(fetchFavoritesStatusAction.fulfilled, (state, action) => {
+        if(state.currentOffer){
+          state.currentOffer.isFavorite = action.payload.isFavorite;
+        }
       })
       .addCase(fetchNearbyOffersAction.fulfilled, (state, action) => {
         state.nearestOffers = action.payload;

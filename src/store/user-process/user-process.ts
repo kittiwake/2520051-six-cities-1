@@ -7,6 +7,7 @@ import { checkAuthAction, loginAction, logoutAction } from '../api-actions';
 const initialState: UserProcess = {
   authorizationStatus: AuthorizationStatus.Unknown,
   user: null,
+  error: null,
 };
 
 export const userProcess = createSlice({
@@ -21,6 +22,7 @@ export const userProcess = createSlice({
       })
       .addCase(checkAuthAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
+        state.error = 'Ошибка авторизации';
       })
       .addCase(loginAction.fulfilled, (state, action) => {
         state.authorizationStatus = AuthorizationStatus.Auth;
@@ -28,6 +30,7 @@ export const userProcess = createSlice({
       })
       .addCase(loginAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
+        state.error = 'Неправильный логин или пароль';
       })
       .addCase(logoutAction.fulfilled, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;

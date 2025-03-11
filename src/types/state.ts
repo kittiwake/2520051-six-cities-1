@@ -7,6 +7,7 @@ import { User } from './user';
 export type UserProcess = {
   authorizationStatus: AuthorizationStatus;
   user: User | null;
+  error: string | null;
 };
 
 export type MainData = {

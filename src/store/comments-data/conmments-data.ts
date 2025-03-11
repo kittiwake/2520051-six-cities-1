@@ -40,7 +40,7 @@ export const commentsData = createSlice({
       })
       .addCase(fetchCommentsAction.rejected, (state) => {
         state.isCommentsLoading = false;
-        state.error = 'Ошибка загрузки'; //добавить rejectWithValue в fetchOfferAction
+        state.error = 'Ошибка загрузки';
       })
       .addCase(addCommentAction.fulfilled, (state, action) => {
         state.comments.splice(0, 0, action.payload);
@@ -54,7 +54,7 @@ export const commentsData = createSlice({
       })
       .addCase(addCommentAction.rejected, (state) => {
         state.isReviewLoading = false;
-        state.error = 'Ошибка загрузки'; //добавить rejectWithValue в fetchOfferAction
+        state.error = 'Ошибка загрузки';
       });
 
   }
