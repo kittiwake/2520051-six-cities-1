@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { Icon, layerGroup, CircleMarkerOptions } from 'leaflet';
+import { Icon, layerGroup } from 'leaflet';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../constant';
 import { Location } from '../../types/main';
 import useMap from '../hooks/use-map';
@@ -7,25 +7,19 @@ import L from 'leaflet';
 
 import 'leaflet/dist/leaflet.css';
 import { useAppSelector } from '../hooks';
+import { getActiveCardId } from '../../store/map-process/selectors';
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40]
+  iconSize: [40, 60],
+  iconAnchor: [20, 60]
 });
 
 const currentCustomIcon = new Icon({
   iconUrl: URL_MARKER_CURRENT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40]
+  iconSize: [40, 60],
+  iconAnchor: [20, 60]
 });
-
-const currentCustomCircle: CircleMarkerOptions = {
-  color: 'rgba(39, 104, 168, 0.1)',
-  fillColor: 'rgba(39, 104, 168, 0.5)',
-  fillOpacity: 0.6,
-  radius: 500
-};
 
 
 type MapDataType = {
@@ -43,7 +37,7 @@ function Map({mapData, centerMap, type}: MapProps): JSX.Element {
   const mapRef = useRef<HTMLElement | null>(null);
 
   const map = useMap(mapRef, centerMap);
-  const activeCardId = useAppSelector((state) => state.activeCardId);
+  const activeCardId = useAppSelector(getActiveCardId);
 
 
   useEffect(() => {
@@ -55,11 +49,11 @@ function Map({mapData, centerMap, type}: MapProps): JSX.Element {
 
     mapData.forEach((item) => {
       const { latitude, longitude } = item.location;
-      L.marker([latitude, longitude], {icon: item.id === activeCardId ? currentCustomIcon : defaultCustomIcon})
+      L.marker([latitude, longitude], {icon: item.id === activeCardId && type !== 'offer' ? currentCustomIcon : defaultCustomIcon})
         .addTo(markerLayer);
     });
     if (type === 'offer') {
-      L.circle([centerMap.latitude, centerMap.longitude], currentCustomCircle).addTo(markerLayer);
+      L.marker([centerMap.latitude, centerMap.longitude], {icon: currentCustomIcon }).addTo(markerLayer);
     }
 
     return () => {

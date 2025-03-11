@@ -8,7 +8,7 @@ export const endPoints = {
   OFFER: '/offers/:offerId',
   NEARBY: '/offers/:offerId/nearby',
   FAVORITE: '/favorite',
-  // '/favorite/{offerId}/{status}'
+  FAVORITE_STATUS: '/favorite/:offerId/:status',
   COMMENTS: '/comments/:offerId', // get post
   LOGIN: '/login', // get post
   LOGOUT: '/logout', // delete
@@ -80,6 +80,15 @@ export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
+}
+
+export enum NameSpace {
+  App = 'APP',
+  Main = 'MAIN',
+  Offer = 'OFFER',
+  User = 'USER',
+  Comments = 'COMMENTS',
+  Map = 'MAP',
 }
 
 export const reviewRatings = [

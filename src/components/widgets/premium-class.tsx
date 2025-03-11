@@ -1,3 +1,4 @@
+import { memo } from 'react';
 
 const PremiumClass = ({ type }: { type: string }) => (
   <div className={`${type}__mark`}>
@@ -5,4 +6,5 @@ const PremiumClass = ({ type }: { type: string }) => (
   </div>
 );
 
-export default PremiumClass;
+const MemorizedPremiumClass = memo(PremiumClass);
+export default MemorizedPremiumClass;

@@ -1,11 +1,11 @@
 import { useAppSelector } from '../hooks';
 import { Link } from 'react-router-dom';
 import CardList from '../card-list/card-list';
-import { filterFavoriteOffers } from '../../store/selectrors';
+import { getFilterFavoriteOffers } from '../../store/main-data/selectors';
 
 
 function FavoriteList(): JSX.Element {
-  const favorites = useAppSelector(filterFavoriteOffers);
+  const favorites = useAppSelector(getFilterFavoriteOffers);
 
   return (
     <section className="favorites">

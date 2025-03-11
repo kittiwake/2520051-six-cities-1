@@ -2,16 +2,20 @@ import { ChangeEvent, FormEvent, Fragment } from 'react';
 import { reviewRatings } from '../../constant';
 import { addCommentAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { setReviewComment, setReviewRaiting } from '../../store/action';
+import { setReviewComment, setReviewRaiting } from '../../store/comments-data/conmments-data';
+import { getOffer } from '../../store/offer-data/selectors';
+import { getErrorMessage, getReview, getReviewLoadingStatus } from '../../store/comments-data/selectors';
 
 function ReviewsForm() {
   const dispatch = useAppDispatch();
 
-  const currentOffer = useAppSelector((state) => state.currentOffer);
-  const reviewState = useAppSelector((state) => state.review);
-  const isReviewLoading = useAppSelector((state) => state.isReviewLoading);
+  const currentOffer = useAppSelector(getOffer);
+  const reviewState = useAppSelector(getReview);
+  const isReviewLoading = useAppSelector(getReviewLoadingStatus);
+  const errorMessage = useAppSelector(getErrorMessage);
 
-  const handleSubmit = () => {
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
     if (!currentOffer || !reviewState.rating || !reviewState.comment) {
       return;
     }
@@ -24,10 +28,7 @@ function ReviewsForm() {
 
   return (
     <form className="reviews__form form"
-      onSubmit={(evt: FormEvent<HTMLFormElement>) => {
-        evt.preventDefault();
-        handleSubmit();
-      }}
+      onSubmit={handleSubmit}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
@@ -61,6 +62,7 @@ function ReviewsForm() {
           target.textContent = reviewState.comment;
         }}
       />
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
@@ -76,3 +78,4 @@ function ReviewsForm() {
 }
 
 export default ReviewsForm;
+
