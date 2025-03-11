@@ -18,7 +18,7 @@ function CardList({offers, typeContent = 'cities'}: CardListProps): JSX.Element 
     if (cardId && activeCardId !== cardId) {
       dispatch(setActiveCardId(cardId));
     }
-  }, [dispatch]);
+  }, [dispatch, activeCardId]);
   return (
     <div className={classNames(
       {'places__list': typeContent !== 'favorites'},
