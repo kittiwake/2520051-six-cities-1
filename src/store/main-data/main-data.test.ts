@@ -1,4 +1,4 @@
-import { cities, NameSpace } from '../../constant';
+import { cities } from '../../constant';
 import { PlacesOption } from '../../transfers';
 import { State } from '../../types/state';
 import { generateMockOffer } from '../mock';
@@ -17,7 +17,7 @@ import {
 const mockOffers = Array.from({ length: 5 }, generateMockOffer);
 const mockFavorites = mockOffers.filter((offer) => offer.isFavorite);
 
-const mockState: Pick<State, NameSpace.Main> = {
+const mockState: Partial<State> & { MAIN: State['MAIN'] } = {
   MAIN: {
     city: cities[0],
     sorting: PlacesOption.POPULAR,
@@ -30,7 +30,7 @@ const mockState: Pick<State, NameSpace.Main> = {
 } as const;
 
 
-describe('Selectors', () => {
+describe('Main selectors', () => {
 
   it('should get city', () => {
     const city = getCity(mockState);

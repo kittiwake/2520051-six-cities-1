@@ -1,7 +1,5 @@
-import { name, image, random, datatype, lorem } from 'faker';
-import { AuthorizationStatus, cities, initReview } from '../constant';
-import { PlacesOption } from '../transfers';
-import { State } from '../types/state';
+import { name, image, random, datatype, lorem, date, internet } from 'faker';
+import { cities } from '../constant';
 
 export const generateMockOffer = () => ({
   id: datatype.uuid(),
@@ -27,7 +25,7 @@ export const generateMockOffer = () => ({
   rating: datatype.float({ min: 1, max: 5, precision: 0.1 }),
 });
 
-const generateOfferInfo = () => ({
+export const generateOfferInfo = () => ({
   ...generateMockOffer(),
   description: lorem.paragraph(),
   images: Array.from({ length: 6 }, () => image.imageUrl(640, 480, 'city', true)),
@@ -44,43 +42,23 @@ const generateOfferInfo = () => ({
   maxAdults: datatype.number({ min: 1, max: 4 }),
 });
 
-const mockOffers = Array.from({ length: 5 }, generateMockOffer);
-const mockFavorites = mockOffers.filter((offer) => offer.isFavorite);
+export const generateMockComment = () => ({
+  id: datatype.uuid(),
+  comment: lorem.sentences(2),
+  date: date.past().toISOString(),
+  rating: datatype.number({ min: 1, max: 5 }),
+  user: {
+    name: name.firstName(),
+    avatarUrl: image.avatar(),
+    isPro: datatype.boolean(),
+  },
+});
 
-export const mockState: State = {
-  MAIN: {
-    city: cities[0],
-    sorting: PlacesOption.POPULAR,
-    offers: mockOffers,
-    favorites: mockFavorites,
-    countFavorites: mockFavorites.length,
-    isDataLoading: false,
-    error: null,
-  },
-  OFFER: {
-    currentOffer: generateOfferInfo(),
-    nearestOffers: Array.from({ length: 3 }, generateMockOffer),
-    isDataLoading: false,
-    isNearestLoading: false,
-    error: null,
-  },
-  COMMENTS: {
-    comments: [],
-    countComments: 0,
-    review: {
-      rating: initReview.rating,
-      comment: initReview.comment,
-    },
-    isCommentsLoading: false,
-    isReviewLoading: false,
-    error: null,
-  },
-  MAP: {
-    activeCardId: null,
-  },
-  USER: {
-    authorizationStatus: AuthorizationStatus.Unknown,
-    user: null,
-    error: null,
-  },
-};
+export const generateMockUser = () => ({
+  id: datatype.uuid(),
+  email: internet.email(),
+  token: datatype.uuid(),
+  name: name.firstName(),
+  avatarUrl: image.avatar(),
+  isPro: datatype.boolean(),
+});
