@@ -176,7 +176,7 @@ describe('Async actions', () => {
 
     it('should dispatch fetchFavoritesStatusAction correctly', async () => {
       mockAxiosAdapter.onPost(endPoints.FAVORITE_STATUS.replace(':offerId', '1').replace(':status', '1')).reply(200, {});
-      await store.dispatch(fetchFavoritesStatusAction({ offerId: '1', isFavorite: 1 }));
+      await store.dispatch(fetchFavoritesStatusAction({ offerId: '1', isFavorite: true }));
       const actions = extractActionsTypes(store.getActions());
       expect(actions).toEqual([
         fetchFavoritesStatusAction.pending.type,
@@ -186,7 +186,7 @@ describe('Async actions', () => {
 
     it('should handle fetchFavoritesStatusAction failure', async () => {
       mockAxiosAdapter.onPost(endPoints.FAVORITE_STATUS.replace(':offerId', '1').replace(':status', '1')).reply(400);
-      await store.dispatch(fetchFavoritesStatusAction({ offerId: '1', isFavorite: 1 }));
+      await store.dispatch(fetchFavoritesStatusAction({ offerId: '1', isFavorite: true }));
       const actions = extractActionsTypes(store.getActions());
       expect(actions).toEqual([
         fetchFavoritesStatusAction.pending.type,
