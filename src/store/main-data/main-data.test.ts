@@ -9,14 +9,11 @@ import {
   getCountFavorites,
   getDataLoadingStatus,
   getError,
-  getFilterFavoriteOffers,
   getFilteredOffers
 } from './selectors';
 
 const mockOffers = Array.from({ length: 5 }, generateMockOffer);
 const mockFavorites = mockOffers.filter((offer) => offer.isFavorite);
-
-
 
 describe('Main selectors', () => {
   const mockState = {

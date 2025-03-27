@@ -11,8 +11,6 @@ import {
 
 const mockComments = Array.from({ length: 10 }, generateMockComment);
 
-
-
 describe('Comments selectors', () => {
   const mockState = {
     [NameSpace.Comments]: {

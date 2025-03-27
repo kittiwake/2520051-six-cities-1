@@ -14,7 +14,6 @@ import {
   fetchCommentsAction,
   fetchFavoritesStatusAction,
   addCommentAction,
-  loginAction,
   logoutAction
 } from './api-actions';
 import { AppThunkDispatch, extractActionsTypes, generateMockComment, generateMockOffer, generateOfferInfo } from './mock';
@@ -144,7 +143,7 @@ describe('Async actions', () => {
       const emittedActions = store.getActions();
       const extractedActionsTypes = extractActionsTypes(emittedActions);
       const fetchOfferActionFulfilled = emittedActions.at(1) as ReturnType<typeof fetchNearbyOffersAction.fulfilled>;
-      
+
       expect(extractedActionsTypes).toEqual([
         fetchNearbyOffersAction.pending.type,
         fetchNearbyOffersAction.fulfilled.type,
