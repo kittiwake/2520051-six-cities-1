@@ -11,12 +11,11 @@ import {
   fetchOffersAction,
   fetchOfferAction,
   fetchNearbyOffersAction,
-  fetchCommentsAction,
   fetchFavoritesStatusAction,
   addCommentAction,
   logoutAction
 } from './api-actions';
-import { AppThunkDispatch, extractActionsTypes, generateMockComment, generateMockOffer, generateOfferInfo } from './mock';
+import { AppThunkDispatch, extractActionsTypes, generateMockOffer, generateOfferInfo } from './mock';
 
 describe('Async actions', () => {
   const axios = createAPI();
