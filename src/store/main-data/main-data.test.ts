@@ -57,14 +57,6 @@ describe('Main selectors', () => {
     expect(getError(mockState)).toBe(mockState[NameSpace.Main].error);
   });
 
-  // it('should get filtered favorite offers', () => {
-  //   expect(getFilterFavoriteOffers(mockState)).toEqual(
-  //     mockState.MAIN.favorites.map((offer) => ({
-  //       city: offer.city.name,
-  //       offers: mockState[NameSpace.Main].favorites.filter((fav) => fav.city.name === offer.city.name),
-  //     }))
-  //   );
-  // });
 
   it('should get filtered offers', () => {
     expect(getFilteredOffers(mockState)).toEqual(

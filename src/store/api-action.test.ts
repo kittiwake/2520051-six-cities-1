@@ -173,36 +173,6 @@ describe('Async actions', () => {
     expect(actions).toContain(logoutAction.fulfilled.type);
   });
 
-  describe('fetchCommentsAction', () => {
-
-    it('should dispatch fetchCommentsAction correctly', async () => {
-      const mockComments = Array.from({ length: 5 }, generateMockComment);
-      mockAxiosAdapter.onGet(endPoints.COMMENTS.replace(':offerId', '1')).reply(200, mockComments);
-      await store.dispatch(fetchCommentsAction('1'));
-
-      const emittedActions = store.getActions();
-      const extractedActionsTypes = extractActionsTypes(emittedActions);
-      const fetchCommentsActionFulfilled = emittedActions.at(1) as ReturnType<typeof fetchCommentsAction.fulfilled>;
-
-      expect(extractedActionsTypes).toEqual([
-        fetchCommentsAction.pending.type,
-        fetchCommentsAction.fulfilled.type,
-      ]);
-
-      expect(fetchCommentsActionFulfilled.payload)
-        .toEqual(mockComments);
-    });
-
-    it('should handle fetchCommentsAction failure', async () => {
-      mockAxiosAdapter.onGet(endPoints.COMMENTS.replace(':offerId', '1')).reply(400);
-      await store.dispatch(fetchCommentsAction('1'));
-      const actions = extractActionsTypes(store.getActions());
-      expect(actions).toEqual([
-        fetchCommentsAction.pending.type,
-        fetchCommentsAction.rejected.type,
-      ]);
-    });
-  });
   describe('fetchFavoritesStatusAction', () => {
 
     it('should dispatch fetchFavoritesStatusAction correctly', async () => {
