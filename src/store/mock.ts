@@ -1,12 +1,14 @@
 import { name, image, random, datatype, lorem, date, internet } from 'faker';
-import { cities } from '../constant';
+import { AuthorizationStatus, cities, NameSpace } from '../constant';
 import { Action } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { createAPI } from '../services/api';
 import { State } from '../types/state';
+import { PlacesOption } from '../transfers';
 
 export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>;
 export const extractActionsTypes = (actions: Action<string>[]) => actions.map(({ type }) => type);
+
 export const generateMockOffer = () => ({
   id: datatype.uuid(),
   title: lorem.sentence(),
@@ -68,3 +70,46 @@ export const generateMockUser = () => ({
   avatarUrl: image.avatar(),
   isPro: datatype.boolean(),
 });
+
+
+const mockOffers = Array.from({ length: 5 }, generateMockOffer);
+const mockFavorites = mockOffers.filter((offer) => offer.isFavorite);
+const mockComments = Array.from({ length: 10 }, generateMockComment);
+const mockOffer = generateOfferInfo();
+const mockNearest = Array.from({ length: 3 }, generateMockOffer);
+const mockUser = generateMockUser();
+
+export const mockState = {
+  [NameSpace.Main]: {
+    city: cities[0],
+    sorting: PlacesOption.POPULAR,
+    offers: mockOffers,
+    favorites: mockFavorites,
+    countFavorites: mockFavorites.length,
+    isDataLoading: false,
+    error: null,
+  },
+  [NameSpace.Offer]: {
+    currentOffer: mockOffer,
+    nearestOffers: mockNearest,
+    isDataLoading: false,
+    isNearestLoading: false,
+    error: null,
+  },
+  [NameSpace.Comments]: {
+    comments: mockComments,
+    countComments: mockComments.length,
+    review: { rating: 5, comment: 'Great place!' },
+    isCommentsLoading: false,
+    isReviewLoading: false,
+    error: null,
+  },
+  [NameSpace.Map]: {
+    activeCardId: null,
+  },
+  [NameSpace.User]: {
+    authorizationStatus: AuthorizationStatus.Auth,
+    user: mockUser,
+    error: null,
+  },
+};

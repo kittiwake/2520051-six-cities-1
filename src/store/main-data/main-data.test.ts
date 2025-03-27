@@ -1,6 +1,5 @@
-import { cities, NameSpace } from '../../constant';
-import { PlacesOption } from '../../transfers';
-import { generateMockOffer } from '../mock';
+import { NameSpace } from '../../constant';
+import { mockState } from '../mock';
 import {
   getCity,
   getSorting,
@@ -12,21 +11,8 @@ import {
   getFilteredOffers
 } from './selectors';
 
-const mockOffers = Array.from({ length: 5 }, generateMockOffer);
-const mockFavorites = mockOffers.filter((offer) => offer.isFavorite);
 
 describe('Main selectors', () => {
-  const mockState = {
-    [NameSpace.Main]: {
-      city: cities[0],
-      sorting: PlacesOption.POPULAR,
-      offers: mockOffers,
-      favorites: mockFavorites,
-      countFavorites: mockFavorites.length,
-      isDataLoading: false,
-      error: null,
-    },
-  };
 
   it('should get city', () => {
     const city = getCity(mockState);

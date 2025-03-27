@@ -1,21 +1,10 @@
 import { NameSpace } from '../../constant';
-import { generateMockOffer, generateOfferInfo } from '../mock';
+import { mockState } from '../mock';
 import { getNearest, getNearestLoadingStatus, getOffer, getOfferLoadingStatus } from './selectors';
 
-const mockOffer = generateOfferInfo();
-const mockNearest = Array.from({ length: 3 }, generateMockOffer);
 
 describe('Offer selectors', () => {
 
-  const mockState = {
-    [NameSpace.Offer]: {
-      currentOffer: mockOffer,
-      nearestOffers: mockNearest,
-      isDataLoading: false,
-      isNearestLoading: false,
-      error: null,
-    }
-  };
 
   it('should get current offer', () => {
     expect(getOffer(mockState)).toEqual(mockState[NameSpace.Offer].currentOffer);

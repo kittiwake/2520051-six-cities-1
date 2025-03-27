@@ -1,5 +1,5 @@
 import { NameSpace } from '../../constant';
-import { generateMockComment } from '../mock';
+import { mockState } from '../mock';
 import {
   getComments,
   getReviewLoadingStatus,
@@ -9,19 +9,8 @@ import {
   getReview,
 } from './selectors';
 
-const mockComments = Array.from({ length: 10 }, generateMockComment);
 
 describe('Comments selectors', () => {
-  const mockState = {
-    [NameSpace.Comments]: {
-      comments: mockComments,
-      countComments: mockComments.length,
-      review: { rating: 5, comment: 'Great place!' },
-      isCommentsLoading: false,
-      isReviewLoading: false,
-      error: null,
-    },
-  };
 
   it('should get comments', () => {
     expect(getComments(mockState)).toEqual(mockState[NameSpace.Comments].comments.slice(0, 10));

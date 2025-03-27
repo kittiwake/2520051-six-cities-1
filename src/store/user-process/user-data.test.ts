@@ -1,17 +1,9 @@
-import { AuthorizationStatus, NameSpace } from '../../constant';
-import { generateMockUser } from '../mock';
+import { NameSpace } from '../../constant';
+import { mockState } from '../mock';
 import { getAuthCheckedStatus, getAuthError, getAuthorizationStatus, getUser } from './selectors';
 
-const mockUser = generateMockUser();
 
 describe('User selectors', () => {
-  const mockState = {
-    [NameSpace.User]: {
-      authorizationStatus: AuthorizationStatus.Auth,
-      user: mockUser,
-      error: null,
-    },
-  } as const;
 
   it('should get authorizationStatus', () => {
     const authorizationStatus = getAuthorizationStatus(mockState);
